@@ -24,7 +24,7 @@ export default defineConfig({
     fonts({
       google: {
         families: [
-					{ name: 'Inter', styles: 'wght@400;500' }
+					{ name: 'Inter', styles: 'wght@400;500;600' }
 				]
       },
     })

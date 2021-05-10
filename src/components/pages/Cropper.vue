@@ -2,7 +2,8 @@
 	<section class="flex flex-col items-center h-full">
 		<div class="w-full flex-grow flex items-center justify-center">
 			<div class="w-1/2 h-2/3">
-				<cropper 
+				<cropper
+					ref="element"
 					:src="state.originalImage" 
 					:debounce="false" 
 					@change="change"
@@ -27,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { state } from '@/hooks/use-cropper'
+import { state, element } from '@/hooks/use-cropper'
 import { Cropper, Preview } from 'vue-advanced-cropper'
 
 function change({ coordinates, image, canvas }: any) {

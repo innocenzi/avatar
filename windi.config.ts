@@ -13,6 +13,9 @@ export default defineConfig({
 		},
 		fontFamily: {
 			sans: ['Inter']
-		}	
+		},
+		scale: {
+			'flip': '-1',
+		}
 	},
 })
