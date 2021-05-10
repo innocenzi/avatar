@@ -1,8 +1,8 @@
 <template>
-	<open-image v-if="!originalImage" />
-	<cropper />
+	<open-image v-if="!state.originalImage" />
+	<cropper v-else />
 </template>
 
 <script lang="ts" setup>
-import { originalImage } from './components/hooks/useCropper';
+import { state } from '@/hooks/use-cropper';
 </script>

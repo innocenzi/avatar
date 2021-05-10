@@ -58,6 +58,16 @@
   resolved "https://registry.yarnpkg.com/@emmetio/scanner/-/scanner-1.0.0.tgz#065b2af6233fe7474d44823e3deb89724af42b5f"
   integrity sha512-8HqW8EVqjnCmWXVpqAOZf+EGESdkR27odcMMMGefgKXtar00SoYNSryGv//TELI4T3QFsECo78p+0lmalk/CFA==
 
+"@iconify/json-tools@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@iconify/json-tools/-/json-tools-1.0.10.tgz#d9a7050dbbe8bb29d684d4b3f9446ed2d0bea3cc"
+  integrity sha512-LFelJDOLZ6JHlmlAkgrvmcu4hpNPB91KYcr4f60D/exzU1eNOb4/KCVHIydGHIQFaOacIOD+Xy+B7P1z812cZg==
+
+"@iconify/json@^1.1.341":
+  version "1.1.341"
+  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-1.1.341.tgz#818325671f05886cb79e89c504a1792731f27ac3"
+  integrity sha512-rGl01xY7V8SyYiGFyrOrPzEfUqooCxponcR4DvpgSE+pJJcu0HfmJP9Q1SbGJtQmVyMe23Z2uoBqB5ETckin7A==
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz#d4b3549a5db5de2683e0c1071ab4f140904bbf69"
@@ -359,6 +369,21 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.11.tgz#20d22dd0da7d358bb21c17f9bde8628152642c77"
   integrity sha512-b+zB8A2so8eCE0JsxjL24J7vdGl8rzPQ09hZNhystm+KqSbKcAej1A+Hbva1rCMmTTqA+hFnUSDc5kouEo0JzA==
 
+"@vueuse/core@^4.9.2":
+  version "4.9.2"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.9.2.tgz#8e5ac3232bac0dd07ce91b671ad2a73d2e1fb76e"
+  integrity sha512-LI2r/flm2pJ2QfKXJ22IHID92F+l0T8XAc3MFh5AZS+JGVqTIC19elzIxnIugCAXl6nkR7pQitwrndZGy4TzEg==
+  dependencies:
+    "@vueuse/shared" "4.9.2"
+    vue-demi "*"
+
+"@vueuse/shared@4.9.2":
+  version "4.9.2"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-4.9.2.tgz#5dc3edec3b334733aed3345be182eebb1ac9f239"
+  integrity sha512-VMIBX7NWfA3Y21OcCXieGEbclhCzYB7a0lDn6tS1eKephH3STAEWYbz+ucxreHI18XQ8Iip8ee7PYHGXNXpg1g==
+  dependencies:
+    vue-demi "*"
+
 "@windicss/plugin-utils@0.15.10":
   version "0.15.10"
   resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.15.10.tgz#93dde1823da8f89c660fba9467b61723bb2a836c"
@@ -623,6 +648,11 @@ ci-info@^2.0.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
+classnames@^2.2.6:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
+
 cli-boxes@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-2.2.1.tgz#ddd5035d25094fce220e9cab40a45840a440318f"
@@ -726,11 +756,6 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-cropperjs@^1.5.11:
-  version "1.5.11"
-  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.11.tgz#502ae6d8ca098b124de6813601cca70015879fc0"
-  integrity sha512-SJUeBBhtNBnnn+UrLKluhFRIXLJn7XFPv8QN1j49X5t+BIMwkgvDev541f96bmu8Xe0TgCx3gON22KmY/VddaA==
-
 cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -761,6 +786,11 @@ currently-unhandled@^0.4.1:
   integrity sha1-mI3zP+qxke95mmE2nddsF635V+o=
   dependencies:
     array-find-index "^1.0.1"
+
+debounce@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.1.tgz#38881d8f4166a5c5848020c11827b834bcb3e0a5"
+  integrity sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==
 
 debug@^3.1.0:
   version "3.2.7"
@@ -852,6 +882,11 @@ duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
   integrity sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=
+
+easy-bem@^1.0.2:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/easy-bem/-/easy-bem-1.1.1.tgz#1bfcc10425498090bcfddc0f9c000aba91399e03"
+  integrity sha512-GJRqdiy2h+EXy6a8E6R+ubmqUM08BK0FWNq41k24fup6045biQ8NXxoXimiwegMQvFFV3t1emADdGNL1TlS61A==
 
 emmet@^2.3.0:
   version "2.3.4"
@@ -2754,6 +2789,19 @@ vite-plugin-components@^0.9.0:
     magic-string "^0.25.7"
     minimatch "^3.0.4"
 
+vite-plugin-fonts@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-fonts/-/vite-plugin-fonts-0.2.2.tgz#48cda78f5ad36907f3de497fa418ffd2b8f2ca83"
+  integrity sha512-fhzhsrTiuzlDjSO6g5sV5EVIIvbb8lmsaIY6eUTBM4lcF55x40UBpHrcyvNwIhQG211g0lu83XC7oZlkmvdkMA==
+
+vite-plugin-icons@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-icons/-/vite-plugin-icons-0.5.0.tgz#d983358202411240ac86965214a1057d96256413"
+  integrity sha512-YsnoYixkp0HVIx6SvQWTyXXiWBCfc9gtKx3iqyPmN4fsE5hf7NvPp1LKiIazilP+zRUvHEyNeEbH4y6wUX8jMw==
+  dependencies:
+    "@iconify/json-tools" "^1.0.10"
+    vue-template-es2015-compiler "^1.9.1"
+
 vite-plugin-windicss@^0.15.10:
   version "0.15.10"
   resolved "https://registry.yarnpkg.com/vite-plugin-windicss/-/vite-plugin-windicss-0.15.10.tgz#903dd926acd210cd57de29f85daa33ff5555819f"
@@ -2912,6 +2960,25 @@ vscode-vue-languageservice@^0.25.2:
     vscode-languageserver-textdocument "^1.0.1"
     vscode-pug-languageservice "^0.25.3"
     vscode-typescript-languageservice "^0.25.3"
+
+vue-advanced-cropper@^2.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/vue-advanced-cropper/-/vue-advanced-cropper-2.2.1.tgz#a1dcbcb9a917c29b21f1538070eb50c43c64ed90"
+  integrity sha512-MtGrRuHiTHK9YziaBXtu6TOEjBPTirgywupol7r7Lonc8NgXVDQK042VhJmwPfbGzH/E6tvmcSFY6md37hYpdQ==
+  dependencies:
+    classnames "^2.2.6"
+    debounce "^1.2.0"
+    easy-bem "^1.0.2"
+
+vue-demi@*:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.9.0.tgz#b30da61450079d60a132d7aaf9e86d1949e8445e"
+  integrity sha512-f8vVUpC726YXv99fF/3zHaw5CUYbP5H/DVWBN+pncXM8P2Uz88kkffwj9yD7MukuVzPICDHNrgS3VC2ursaP7g==
+
+vue-template-es2015-compiler@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
+  integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
 vue-tsc@^0.1.2:
   version "0.1.2"

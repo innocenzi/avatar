@@ -55,10 +55,7 @@
 			<!-- Wrapper -->
 			<div class="flex mt-1 rounded-md shadow-sm">
 				<!-- Input -->
-				<div
-					class="relative z-10 flex items-stretch flex-grow"
-					:class="errors.urlInput ? 'z-10' : ''"
-				>
+				<div class="relative z-10 flex items-stretch flex-grow" :class="errors.urlInput ? 'z-10' : ''">
 					<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 						<icon-link class="w-5 h-5 text-gray-400" />
 					</div>
@@ -97,9 +94,9 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, unref } from "@vue/reactivity"
-import { watch } from "@vue/runtime-core"
-import { originalImage } from "../hooks/useCropper";
+import { reactive, ref, unref } from 'vue'
+import { watch } from '@vue/runtime-core'
+import { state } from '@/hooks/use-cropper';
 
 const urlInput = ref<string>('')
 const errors = reactive({
@@ -116,7 +113,7 @@ watch([urlInput], () => resetError('url'))
  * Sets the image to crop. Either base64 or plain URL.
  */
 function setImage(image: string) {
-	originalImage.value = image
+	state.originalImage = image
 }
 
 /**
@@ -161,7 +158,7 @@ async function onFileInput(event: Event) {
 		displayError('Not sure what you linked too, but we can not read that.', 'file')
 		return
 	}
-	
+
 	setImage(base64)
 }
 
@@ -177,10 +174,10 @@ async function onUrlInput() {
 	}
 
 	const couldRead = await new Promise<boolean>((resolve) => {
-			const temporaryImage = new Image()
-			temporaryImage.addEventListener('error', () => resolve(false))
-			temporaryImage.addEventListener('load', () => resolve(true))
-			temporaryImage.src = url
+		const temporaryImage = new Image()
+		temporaryImage.addEventListener('error', () => resolve(false))
+		temporaryImage.addEventListener('load', () => resolve(true))
+		temporaryImage.src = url
 	})
 
 	if (!couldRead) {
