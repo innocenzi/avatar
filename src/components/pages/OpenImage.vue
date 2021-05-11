@@ -50,7 +50,7 @@
 
 			<!-- Manual link -->
 			<div class="flex flex-col w-full max-w-lg">
-				<label for="url" class="block text-sm font-medium text-gray-700 sr-only">Manual URL</label>
+				<label for="url" class="block font-medium text-gray-700 sr-only">Manual URL</label>
 				<!-- Wrapper -->
 				<div class="flex mt-1 rounded-md shadow-sm">
 					<!-- Input -->
@@ -65,7 +65,7 @@
 							name="url"
 							placeholder="https://"
 							:class="[
-								'block w-full pl-10 transition rounded-none rounded-l-md',
+								'block w-full py-2.5 pl-10 transition rounded-none rounded-l-md',
 								'bg-gray-800 border-gray-700',
 								'focus:outline-none ',
 								'sm:text-sm',
@@ -149,8 +149,14 @@ function resetError(...types: Array<'url' | 'file'>) {
 /**
  * Displays an error.
  */
-function displayError(error: string, type: 'url' | 'file') {
+function displayError(error: string | string[], type: 'url' | 'file') {
 	resetError('file', 'url')
+
+	if (!Array.isArray(error)) {
+		error = [error]
+	}
+
+	error = error[Math.floor(Math.random() * error.length)]
 	errors[`${type}Input` as const] = error ?? ''
 }
 
@@ -165,27 +171,25 @@ async function onFileInput(event: Event) {
 		return
 	}
 
-	if (!file.type.startsWith('image/')) {
-		displayError('Only images are supported. What in the world did you intend to crop?', 'file')
-
-		return
-	}
-
-	loadFromFile(file).catch(() => displayError('Could not load this file, sorry. Do not try later, the same thing will happen.', 'file'))
+	loadFromFile(file).catch(() => displayError([
+		'Could not load this file, sorry. Do not try later, the same thing will happen.',
+		'Seems like this is not a valid file.',
+		'Sorry, we are too lazy to open this one.',
+		'Is this even a file?',
+		'I wish users knew how to use a computer.',
+	], 'file'))
 }
 
 /**
  * Handles URL input.
  */
 async function onUrlInput() {
-	const url = unref(urlInput)
-
-	if (url.length === 0) {
-		displayError('Please enter a valid URL.', 'url')
-
-		return
-	}
-
-	loadFromUrl(url).catch(() => displayError('Could not load this URL, sorry.', 'url'))
+	loadFromUrl(unref(urlInput)).catch(() => displayError([
+		'Could not load this URL, sorry.',
+		"No, this won't do.",
+		'No, you are not linking to an image.',
+		'Is this a URL?',
+		'Roses are reds, violets are blue, this URL does not point to an image, thank you.',
+	], 'url'))
 }
 </script>

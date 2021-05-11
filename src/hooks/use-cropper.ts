@@ -136,19 +136,29 @@ export async function loadFromFile(file: File) {
 	// Reads the files and gets a blob, type and name.
 	const url = URL.createObjectURL(file)
 	const reader = new FileReader()
-	reader.addEventListener('load', () => {
-		if (!reader.result) {
-			return
-		}
 
-		state.source = {
-			url,
-			name: file.name,
-			type: getMimeType(reader.result as ArrayBuffer, file.type),
-		}
+	return new Promise((resolve, reject) => {
+		reader.addEventListener('load', () => {
+			if (!reader.result) {
+				return reject(new Error('Could not read the file.'))
+			}
+
+			const type = getMimeType(reader.result as ArrayBuffer, file.type)
+			if (!type?.startsWith('image')) {
+				return reject(new Error(`Unsupported mime type: ${type}`))
+			}
+
+			state.source = {
+				url,
+				type,
+				name: file.name,
+			}
+
+			resolve(true)
+		})
+
+		reader.readAsArrayBuffer(file)
 	})
-
-	reader.readAsArrayBuffer(file)
 }
 
 /**
