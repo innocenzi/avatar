@@ -1,6 +1,6 @@
 <template>
 	<section class="flex flex-col items-center h-full">
-		<div class="w-full flex-grow flex items-center justify-center">
+		<div class="w-full flex-grow flex flex-col items-center justify-center">
 			<div class="w-1/2 h-2/3">
 				<cropper
 					v-if="state.source"
@@ -9,12 +9,36 @@
 					:debounce="false"
 					@change="change"
 				/>
+			</div>
+
+			<div class="flex items-center justify-center gap-8 mt-8">
 				<preview
-					v-if="state.crop"
+					:width="32"
+					:height="32"
+					status="online"
+				/>
+
+				<preview
+					:width="40"
+					:height="40"
+					status="away"
+				/>
+
+				<preview
 					:width="80"
 					:height="80"
-					:image="state.crop.image"
-					:coordinates="state.crop.coordinates"
+				/>
+
+				<preview
+					:width="32"
+					:height="32"
+					status="busy"
+				/>
+
+				<preview
+					:width="32"
+					:height="32"
+					status="offline"
 				/>
 			</div>
 		</div>
@@ -39,7 +63,7 @@
 
 <script setup lang="ts">
 import { state, element, change } from '@/hooks/use-cropper'
-import { Cropper, Preview } from 'vue-advanced-cropper'
+import { Cropper } from 'vue-advanced-cropper'
 </script>
 
 <style>
