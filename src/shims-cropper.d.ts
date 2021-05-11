@@ -37,13 +37,29 @@ declare module 'vue-advanced-cropper' {
 		visibleArea: Coordinates
 	}
 
+	export type CoordinateSetterCallbackParameters = {
+		imageSize: { width: number; height: number }
+		visibleArea: Coordinates
+		coordinates: Coordinates
+	}
+
+	export type CoordinateSetterCallback = (args: CoordinateSetterCallbackParameters) => Partial<Coordinates>
+	export type CoordinateSetter = (param: Coordinates | Coordinates[] | CoordinateSetterCallback | CoordinateSetterCallback[]) => void
+
 	export type CropperElement = Component & {
+		coordinates: Coordinates
 		customImageTransforms: Transforms
-		zoom: (quantity: number) => void
-		move: (x: number, y: number) => void
-		rotate: (degrees: number) => void
+		setCoordinates: CoordinateSetter
+		refresh: () => void
+		reset: () => void
+		zoom: (quantity: number, center: Pick<Coordinates, 'left' | 'top'>) => void
+		move: (left: number, top: number) => void
+		rotate: (angle: number) => void
 		flip: (horizontal: boolean, vertical: boolean) => void
 		getResult: () => {
+			coordinates: Coordinates
+			imageTransforms: Transforms
+			visibleArea: Coordinates
 			canvas: HTMLCanvasElement
 		}
 	}
