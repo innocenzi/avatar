@@ -3,8 +3,9 @@
 		<div class="w-full flex-grow flex items-center justify-center">
 			<div class="w-1/2 h-2/3">
 				<cropper
+					v-if="state.source"
 					ref="element"
-					:src="state.source?.url"
+					:src="state.source.url"
 					:debounce="false"
 					@change="change"
 				/>

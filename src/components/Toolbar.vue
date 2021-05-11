@@ -1,5 +1,5 @@
 <template>
-	<aside class="shadow-xl bg-gray-800 rounded-md ring-2 ring-gray-600 flex-wrap gap-6 max-w-lg lg:max-w-3xl p-6 flex justify-center items-center">
+	<aside class="shadow-xl bg-gray-800 rounded-md ring-2 ring-gray-600 flex-wrap gap-7 max-w-lg lg:max-w-3xl px-8 py-5 flex justify-center items-center">
 		<!-- Rotation -->
 		<tool-group name="Rotation">
 			<tool-button class="active:-rotate-6 transform" title="Rotate counter-clockwise" @click="rotate(-90)">
@@ -40,8 +40,10 @@
 			</tool-button>
 		</tool-group>
 
+		<!-- Separator -->
+		<div />
 		<!-- Preview -->
-		<tool-group class="justify-center">
+		<!-- <tool-group class="justify-center">
 			<preview
 				v-if="state.crop"
 				:width="32"
@@ -50,10 +52,13 @@
 				:coordinates="state.crop.coordinates"
 				class="rounded-full ml-4"
 			/>
-		</tool-group>
+		</tool-group> -->
 
-		<!-- Download -->
-		<tool-group class="justify-center">
+		<!-- Actions -->
+		<tool-group class="justify-center" wrapper="gap-2">
+			<action-button title="Open another image" @click="state.inputDialog = true">
+				<mdi:folder-open-outline class="w-5 h-5" />
+			</action-button>
 			<action-button title="Download the cropped image" @click="download">
 				<span>Download</span>
 				<mdi:download-outline class="w-5 h-5" />

@@ -1,6 +1,6 @@
 <template>
-	<open-image v-if="!state.source" />
-	<cropper v-else />
+	<open-image />
+	<cropper />
 </template>
 
 <script lang="ts" setup>

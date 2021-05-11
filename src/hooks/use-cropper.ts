@@ -5,10 +5,11 @@ import { getMimeType } from './mime-type'
 
 export const element = ref() as Ref<CropperElement>
 
-export const state = reactive<State>({
-})
+export const state = reactive<State>({})
 
 export interface State {
+	inputDialog?: boolean
+
 	source?: {
 		/**
 		 * Blob URL.
