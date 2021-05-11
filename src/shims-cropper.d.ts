@@ -52,7 +52,7 @@ declare module 'vue-advanced-cropper' {
 		setCoordinates: CoordinateSetter
 		refresh: () => void
 		reset: () => void
-		zoom: (quantity: number, center: Pick<Coordinates, 'left' | 'top'>) => void
+		zoom: (quantity: number, center?: Pick<Coordinates, 'left' | 'top'>) => void
 		move: (left: number, top: number) => void
 		rotate: (angle: number) => void
 		flip: (horizontal: boolean, vertical: boolean) => void
