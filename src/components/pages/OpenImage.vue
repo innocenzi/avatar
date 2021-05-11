@@ -36,7 +36,7 @@
 							class="relative font-medium text-blue-300 rounded-md cursor-pointer hover:text-indigo-500 focus-within:outline-none"
 						>
 							<span>Upload a file</span>
-							<input @change="onFileInput" id="file-upload" name="file-upload" type="file" class="sr-only" />
+							<input id="file-upload" name="file-upload" type="file" class="sr-only" @change="onFileInput" />
 						</div>
 						<p class="pl-1">or drag and drop</p>
 					</div>
@@ -60,10 +60,10 @@
 						<icon-link class="w-5 h-5 text-gray-400" />
 					</div>
 					<input
+						id="url"
 						v-model="urlInput"
 						type="text"
 						name="url"
-						id="url"
 						placeholder="https://"
 						:class="[
 							'block w-full pl-10 transition rounded-none rounded-l-md',
@@ -79,8 +79,8 @@
 
 				<!-- Upload button -->
 				<button
-					@click="onUrlInput"
 					class="relative inline-flex items-center px-4 py-2 -ml-px space-x-2 text-sm font-medium text-gray-300 transition bg-gray-800 border border-l-0 border-gray-700 focus:border-l rounded-r-md hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-blue-300 hover:z-20 focus:z-20"
+					@click="onUrlInput"
 				>
 					<icon-upload class="w-5 h-5 text-gray-400" />
 					<span>Use</span>
@@ -96,12 +96,12 @@
 <script setup lang="ts">
 import { reactive, ref, unref } from 'vue'
 import { watch } from '@vue/runtime-core'
-import { state } from '@/hooks/use-cropper';
+import { loadFromFile, loadFromUrl } from '@/hooks/use-cropper'
 
 const urlInput = ref<string>('')
 const errors = reactive({
 	urlInput: '',
-	fileInput: ''
+	fileInput: '',
 })
 
 /**
@@ -110,17 +110,10 @@ const errors = reactive({
 watch([urlInput], () => resetError('url'))
 
 /**
- * Sets the image to crop. Either base64 or plain URL.
- */
-function setImage(image: string) {
-	state.originalImage = image
-}
-
-/**
  * Resets errors.
  */
 function resetError(...types: Array<'url' | 'file'>) {
-	types.forEach(type => errors[`${type}Input` as const] = '')
+	types.forEach((type) => errors[`${type}Input` as const] = '')
 }
 
 /**
@@ -144,22 +137,11 @@ async function onFileInput(event: Event) {
 
 	if (!file.type.startsWith('image/')) {
 		displayError('Only images are supported. What in the world did you intend to crop?', 'file')
+
 		return
 	}
 
-	const base64 = await new Promise<string | false>((resolve) => {
-		const reader = new FileReader();
-		reader.addEventListener('load', (event) => resolve(event.target?.result as string))
-		reader.addEventListener('error', () => resolve(false))
-		reader.readAsDataURL(file);
-	})
-
-	if (!base64) {
-		displayError('Not sure what you linked too, but we can not read that.', 'file')
-		return
-	}
-
-	setImage(base64)
+	loadFromFile(file).catch(() => displayError('Could not load this file, sorry. Do not try later, the same thing will happen.', 'file'))
 }
 
 /**
@@ -170,21 +152,10 @@ async function onUrlInput() {
 
 	if (url.length === 0) {
 		displayError('Please enter a valid URL.', 'url')
+
 		return
 	}
 
-	const couldRead = await new Promise<boolean>((resolve) => {
-		const temporaryImage = new Image()
-		temporaryImage.addEventListener('error', () => resolve(false))
-		temporaryImage.addEventListener('load', () => resolve(true))
-		temporaryImage.src = url
-	})
-
-	if (!couldRead) {
-		displayError('Not sure what you linked too, but we can not read that.', 'url')
-		return
-	}
-
-	setImage(url)
+	loadFromUrl(url).catch(() => displayError('Could not load this URL, sorry.', 'url'))
 }
 </script>

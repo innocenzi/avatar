@@ -4,39 +4,41 @@
 			<div class="w-1/2 h-2/3">
 				<cropper
 					ref="element"
-					:src="state.originalImage" 
-					:debounce="false" 
+					:src="state.source?.url"
+					:debounce="false"
 					@change="change"
 				/>
-				<!-- <preview
-					v-if="state.result"
-					:width="120"
-					:height="120"
-					:image="state.result.image"
-					:coordinates="state.result.coordinates"
-					/> -->
+				<preview
+					v-if="state.crop"
+					:width="80"
+					:height="80"
+					:image="state.crop.image"
+					:coordinates="state.crop.coordinates"
+				/>
 			</div>
 		</div>
 
 		<section class="flex flex-col w-full items-center px-6 flex-shrink-0">
 			<toolbar />
-			<footer class="p-8 flex items-center justify-center text-xs text-gray-500">
-				bla bla
+			<footer class="p-8 flex items-center justify-center text-xs text-gray-500 space-x-8">
+				<footer-link href="https://github.com/innocenzi/avatar">
+					GitHub
+				</footer-link>
+				<span>
+					Made with <span class="text-[0.7rem]">❤</span> by
+					<footer-link class="font-bold" href="https://twitter.com/enzoinnocenzi">Enzo Innocenzi</footer-link>
+				</span>
+				<footer-link href="https://github.com/innocenzi/avatar/issues">
+					Feedback
+				</footer-link>
 			</footer>
 		</section>
 	</section>
 </template>
 
 <script setup lang="ts">
-import { state, element } from '@/hooks/use-cropper'
+import { state, element, change } from '@/hooks/use-cropper'
 import { Cropper, Preview } from 'vue-advanced-cropper'
-
-function change({ coordinates, image, canvas }: any) {
-	state.result = {
-		coordinates,
-		image,
-	}
-}
 </script>
 
 <style>
@@ -55,7 +57,7 @@ function change({ coordinates, image, canvas }: any) {
 	user-select: none;
 	position: absolute;
 	transform-origin: center;
-	max-width: none !important; 
+	max-width: none !important;
 	filter: opacity(20%);
 	overflow: hidden;
 }

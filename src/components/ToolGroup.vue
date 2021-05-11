@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col">
-		<span class="text-sm font-bold text-gray-500 mb-1" v-text="name" />
-		<div class="flex">
+		<span v-if="name" class="text-sm font-bold text-gray-500 mb-1" v-text="name" />
+		<div class="flex items-center justify-center">
 			<slot />
 		</div>
 	</div>
@@ -11,6 +11,6 @@
 import { defineProps } from 'vue'
 
 defineProps<{
-	name: string
+	name?: string
 }>()
 </script>
