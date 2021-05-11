@@ -40,6 +40,36 @@ export function rotate(angle: number) {
 }
 
 /**
+ * Moves the stencil.
+ */
+export function transform(mode: 'center' | 'maximize') {
+	if (mode === 'center') {
+		get(element).setCoordinates(({ imageSize, coordinates }) => ({
+			left: imageSize.width / 2 - coordinates.width / 2,
+			top: imageSize.height / 2 - coordinates.height / 2,
+		}))
+	}
+
+	if (mode === 'maximize') {
+		const center = {
+			left: get(element).coordinates.left + get(element).coordinates.width / 2,
+			top: get(element).coordinates.top + get(element).coordinates.height / 2,
+		}
+
+		get(element).setCoordinates([
+			({ imageSize }) => ({
+				width: imageSize.width,
+				height: imageSize.height,
+			}),
+			({ coordinates }) => ({
+				left: center.left - coordinates.width / 2,
+				top: center.top - coordinates.height / 2,
+			}),
+		])
+	}
+}
+
+/**
  * Zooms the image.
  */
 export function zoom(mode: 'in' | 'out') {

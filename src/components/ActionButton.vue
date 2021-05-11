@@ -2,6 +2,7 @@
 	<button
 		:class="[
 			'px-4 py-3 space-x-1 flex items-center justify-center',
+			'text-sm font-medium',
 			'transition',
 			'rounded-md',
 			'text-pink-300 bg-pink-300 bg-opacity-15 hover:bg-opacity-20',
