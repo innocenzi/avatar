@@ -1,27 +1,34 @@
-# Vue 3 + Typescript + Vite
+<p align="center">
+  <br />
+  <a href="https://avatar.innocenzi.dev/">
+    <img width="100" src="./public/logo.svg" alt="Logo of the tool">
+  </a>
+  <br />
+</p>
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+<h2 align="center">Avatar</h2>
 
-## Recommended IDE Setup
+<p align="center">
+  <br />
+  <a href="https://avatar.innocenzi.dev/">
+    <img alt="netlify" src="https://api.netlify.com/api/v1/badges/637d1b40-ac04-4811-adbf-a1ca6d63ca1f/deploy-status">
+  </a>
+</p>
 
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+<br />
 
-### If Using `<script setup>`
+<div align="center">
+  A simple tool for cropping an avatar.
+  <br />
+  It was made as an alternative to <a href="https://avatarcropper.com">Avatar Cropper</a> to better suit my UI tastes and adapt the tool to my needs.
+  <br />
+  <a href="https://avatar.innocenzi.dev/">Visit the website</a>
+</div>
 
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
-
-### If Using Volar
-
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
-
-### If Using Vetur
-
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette
-5. Search and run "Select TypeScript version" -> "Use workspace version"
+<p align="center">
+  <br />
+  ·
+  <br />
+  <br />
+  <sub>Built with ❤︎ by <a href="https://twitter.com/enzoinnocenzi">Enzo Innocenzi</a>
+</p>
