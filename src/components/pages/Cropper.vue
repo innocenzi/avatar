@@ -11,34 +11,13 @@
 				/>
 			</div>
 
-			<div class="flex items-center justify-center gap-8 mt-8">
+			<div class="flex items-center justify-center gap-3 md:gap-8 mt-4 md:mt-8 mb-4 md:mb-0">
 				<preview
-					:width="32"
-					:height="32"
-					status="online"
-				/>
-
-				<preview
-					:width="40"
-					:height="40"
-					status="away"
-				/>
-
-				<preview
-					:width="80"
-					:height="80"
-				/>
-
-				<preview
-					:width="32"
-					:height="32"
-					status="busy"
-				/>
-
-				<preview
-					:width="32"
-					:height="32"
-					status="offline"
+					v-for="({ size, status }, i) in previews"
+					:key="i"
+					:width="size"
+					:height="size"
+					:status="status"
 				/>
 			</div>
 		</div>
@@ -64,6 +43,14 @@
 <script setup lang="ts">
 import { state, element, change } from '@/hooks/use-cropper'
 import { Cropper } from 'vue-advanced-cropper'
+
+const previews = [
+	{ size: 32, status: 'online' },
+	{ size: 40, status: 'away' },
+	{ size: 80 },
+	{ size: 32, status: 'busy' },
+	{ size: 32, status: 'offline' },
+]
 </script>
 
 <style>

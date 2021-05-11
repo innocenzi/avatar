@@ -42,17 +42,6 @@
 
 		<!-- Separator -->
 		<div />
-		<!-- Preview -->
-		<!-- <tool-group class="justify-center">
-			<preview
-				v-if="state.crop"
-				:width="32"
-				:height="32"
-				:image="state.crop.image"
-				:coordinates="state.crop.coordinates"
-				class="rounded-full ml-4"
-			/>
-		</tool-group> -->
 
 		<!-- Actions -->
 		<tool-group class="justify-center" wrapper="gap-2">
