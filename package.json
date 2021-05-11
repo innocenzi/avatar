@@ -13,6 +13,8 @@
     "vue-advanced-cropper": "^2.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.6.4",
+    "eslint": "^7.24.0",
     "@iconify/json": "^1.1.341",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.11",
