@@ -1,5 +1,5 @@
 <template>
-	<aside class="shadow-xl bg-gray-800 rounded-md ring-2 ring-gray-600 max-w-lg lg:max-w-3xl p-6 flex space-x-6">
+	<aside class="shadow-xl bg-gray-800 rounded-md ring-2 ring-gray-600 flex-wrap gap-6 max-w-lg lg:max-w-3xl p-6 flex justify-center items-center">
 		<!-- Rotation -->
 		<tool-group name="Rotation">
 			<tool-button class="active:-rotate-6 transform" title="Rotate counter-clockwise" @click="rotate(-90)">
