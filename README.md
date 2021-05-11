@@ -11,7 +11,7 @@
 <p align="center">
   <br />
   <a href="https://avatar.innocenzi.dev/">
-    <img alt="netlify" src="https://api.netlify.com/api/v1/badges/637d1b40-ac04-4811-adbf-a1ca6d63ca1f/deploy-status">
+    <img alt="netlify" src="https://api.netlify.com/api/v1/badges/83d166f4-e32a-4f9e-a64f-472dbf74f9e6/deploy-status">
   </a>
 </p>
 
@@ -24,6 +24,16 @@
   <br />
   <a href="https://avatar.innocenzi.dev/">Visit the website</a>
 </div>
+
+
+<p align="center">
+  <br />
+  ·
+  <br />
+  <br />
+  <br />
+  <img alt="Preview" src="./.github/preview.png">
+</p>
 
 <p align="center">
   <br />
