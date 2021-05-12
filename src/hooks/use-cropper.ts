@@ -1,4 +1,5 @@
-import { get } from '@vueuse/shared'
+import { useLocalStorage } from '@vueuse/core'
+import { get, set } from '@vueuse/shared'
 import { reactive, Ref, ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
 import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
@@ -6,6 +7,7 @@ import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } 
 export const element = ref() as Ref<CropperElement>
 
 export const state = reactive<State>({})
+export const sourceUrl = useLocalStorage<string>('source-url', null)
 
 export interface State {
 	inputDialog?: boolean
@@ -170,6 +172,7 @@ export async function loadFromUrl(url: string) {
 		.then((blob) => {
 			const type = getMimeTypeFromBlob(blob)
 			const fileName = new URL(url).pathname.split('/').pop() || `cropped.${getExtensionFromMimeType(type)}`
+			set(sourceUrl, url)
 
 			return new File([blob], fileName, { type })
 		})

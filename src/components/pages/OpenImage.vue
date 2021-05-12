@@ -1,6 +1,6 @@
 <template>
 	<modal :show="show" @close="close">
-		<section class="flex flex-col items-center justify-center pointer-events-auto w-full max-w-lg">
+		<section class="flex flex-col items-center justify-center w-full max-w-lg pointer-events-auto">
 			<img src="/logo.svg" class="w-24 h-24 mb-10" alt="Logo">
 
 			<!-- Manual link -->
@@ -9,13 +9,13 @@
 				<!-- Wrapper -->
 				<div class="flex mt-1 rounded-md shadow-sm">
 					<!-- Input -->
-					<div class="relative z-10 flex items-stretch flex-grow" :class="errors.urlInput ? 'z-10' : ''">
+					<div class="relative z-10 flex items-stretch flex-grow" :class="errors.url ? 'z-10' : ''">
 						<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<mdi:link-variant class="w-5 h-5 text-gray-400" />
 						</div>
 						<input
 							id="url"
-							v-model="urlInput"
+							v-model="sourceUrl"
 							type="text"
 							name="url"
 							placeholder="https://"
@@ -24,10 +24,11 @@
 								'bg-gray-800 border-gray-700',
 								'focus:outline-none ',
 								'sm:text-sm',
-								errors.urlInput
+								errors.url
 									? 'ring-red-300 border-red-300 focus:ring-red-300 focus:border-red-300'
 									: 'focus:ring-pink-300 focus:border-pink-300'
 							]"
+							@keypress.enter="onUrlInput"
 						/>
 					</div>
 
@@ -42,13 +43,13 @@
 				</div>
 
 				<!-- Error -->
-				<span v-if="errors.urlInput" class="mt-2 text-sm text-red-300" v-text="errors.urlInput"></span>
+				<span v-if="errors.url" class="mt-2 text-sm text-red-300" v-text="errors.url"></span>
 			</div>
 
 			<span class="my-6 text-gray-400">or</span>
 
 			<!-- Dotted box -->
-			<div class="flex flex-col _w-full max-w-lg">
+			<div class="flex flex-col max-w-lg _w-full">
 				<!-- Input -->
 				<label
 					for="file-upload"
@@ -65,7 +66,7 @@
 				>
 					<div class="flex items-center space-x-2 text-center">
 						<svg
-							class="mx-auto text-gray-400 h-6 w-6"
+							class="w-6 h-6 mx-auto text-gray-400"
 							stroke="currentColor"
 							fill="none"
 							viewBox="0 0 48 48"
@@ -79,7 +80,7 @@
 							/>
 						</svg>
 						<div class="flex">
-							<div class="relative transition text-sm font-medium text-gray-400 group-hover:text-gray-300 rounded-md cursor-pointer hover:text-pink-400 focus-within:outline-none">
+							<div class="relative text-sm font-medium text-gray-400 transition rounded-md cursor-pointer group-hover:text-gray-300 hover:text-pink-400 focus-within:outline-none">
 								<span>Upload a file</span>
 								<input id="file-upload" name="file-upload" type="file" class="sr-only" @change="onFileInput" />
 							</div>
@@ -89,21 +90,31 @@
 				</label>
 
 				<!-- Error -->
-				<span v-if="errors.fileInput" class="mt-2 text-sm text-red-300" v-text="errors.fileInput"></span>
+				<span v-if="errors.file" class="mt-2 text-sm text-red-300" v-text="errors.file"></span>
 			</div>
 		</section>
 	</modal>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, unref } from 'vue'
-import { computed, watch } from '@vue/runtime-core'
-import { loadFromFile, loadFromUrl, state } from '@/hooks/use-cropper'
+import { reactive } from 'vue'
+import { computed, onMounted, watch } from '@vue/runtime-core'
+import { loadFromFile, loadFromUrl, sourceUrl, state } from '@/hooks/use-cropper'
+import { get, set } from '@vueuse/shared'
 
-const urlInput = ref<string>('')
 const errors = reactive({
-	urlInput: '',
-	fileInput: '',
+	url: '',
+	file: '',
+})
+
+/**
+ * When mounted, if there was a source URL in the storage,
+ * loads it (as a convenience).
+ */
+onMounted(async() => {
+	if (get(sourceUrl) && !await onUrlInput()) {
+		set(sourceUrl, null)
+	}
 })
 
 /**
@@ -130,7 +141,7 @@ const close = () => {
 /**
  * Clears error when needed.
  */
-watch([urlInput], () => resetError('url'))
+watch([sourceUrl], () => resetError('url'))
 
 /**
  * Closes the input dialog request when the source changes.
@@ -145,7 +156,7 @@ watch(() => state.source, () => {
  * Resets errors.
  */
 function resetError(...types: Array<'url' | 'file'>) {
-	types.forEach((type) => errors[`${type}Input` as const] = '')
+	types.forEach((type) => errors[type] = '')
 }
 
 /**
@@ -159,7 +170,9 @@ function displayError(error: string | string[], type: 'url' | 'file') {
 	}
 
 	error = error[Math.floor(Math.random() * error.length)]
-	errors[`${type}Input` as const] = error ?? ''
+	errors[type] = error ?? ''
+
+	return false
 }
 
 /**
@@ -186,7 +199,7 @@ async function onFileInput(event: Event) {
  * Handles URL input.
  */
 async function onUrlInput() {
-	loadFromUrl(unref(urlInput)).catch(() => displayError([
+	return loadFromUrl(get(sourceUrl)).catch(() => displayError([
 		'Could not load this URL, sorry.',
 		"No, this won't do.",
 		'No, you are not linking to an image.',
