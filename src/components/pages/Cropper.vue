@@ -1,7 +1,7 @@
 <template>
 	<section class="flex flex-col items-center h-full">
 		<div class="flex flex-col items-center justify-center flex-grow w-full px-4">
-			<div class="w-full h-2/3">
+			<div class="w-full h-2/3 rounded-lg overflow-hidden">
 				<cropper
 					v-if="state.source"
 					ref="element"
@@ -9,6 +9,8 @@
 					:debounce="false"
 					:stencil-component="stencil"
 					:stencil-props="settings"
+					image-class="select-none rounded-lg absolute origin-center !max-w-none overflow-hidden opacity-20 transition-opacity"
+					image-restriction="none"
 					@change="change"
 				/>
 			</div>
@@ -71,15 +73,6 @@ const settings = computed(() => ({
   direction: ltr;
 	overflow: hidden;
 	height: 100%;
-}
-
-.vue-advanced-cropper__image {
-	user-select: none;
-	position: absolute;
-	transform-origin: center;
-	max-width: none !important;
-	filter: opacity(20%);
-	overflow: hidden;
 }
 
 .vue-advanced-cropper__stretcher {
