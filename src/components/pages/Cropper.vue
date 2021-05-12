@@ -1,17 +1,19 @@
 <template>
 	<section class="flex flex-col items-center h-full">
-		<div class="w-full flex-grow flex flex-col items-center justify-center">
+		<div class="flex flex-col items-center justify-center flex-grow w-full">
 			<div class="w-1/2 h-2/3">
 				<cropper
 					v-if="state.source"
 					ref="element"
 					:src="state.source.url"
 					:debounce="false"
+					:stencil-component="stencil"
+					:stencil-props="settings"
 					@change="change"
 				/>
 			</div>
 
-			<div class="flex items-center justify-center gap-3 md:gap-8 mt-4 md:mt-8 mb-4 md:mb-0">
+			<div class="flex items-center justify-center gap-3 mt-4 mb-4 md:gap-8 md:mt-8 md:mb-0">
 				<preview
 					v-for="({ size, status }, i) in previews"
 					:key="i"
@@ -22,9 +24,9 @@
 			</div>
 		</div>
 
-		<section class="flex flex-col w-full items-center px-6 flex-shrink-0">
+		<section class="flex flex-col items-center flex-shrink-0 w-full px-6">
 			<toolbar />
-			<footer class="p-8 flex items-center justify-center text-xs text-gray-500 space-x-8">
+			<footer class="flex items-center justify-center p-8 space-x-8 text-xs text-gray-500">
 				<footer-link href="https://github.com/innocenzi/avatar">
 					GitHub
 				</footer-link>
@@ -43,6 +45,8 @@
 <script setup lang="ts">
 import { state, element, change } from '@/hooks/use-cropper'
 import { Cropper } from 'vue-advanced-cropper'
+import { computed } from 'vue'
+import stencil from '../Stencil.vue'
 
 const previews = [
 	{ size: 32, status: 'online' },
@@ -51,6 +55,10 @@ const previews = [
 	{ size: 32, status: 'busy' },
 	{ size: 32, status: 'offline' },
 ]
+
+const settings = computed(() => ({
+	aspectRatio: 1 / 1,
+}))
 </script>
 
 <style>

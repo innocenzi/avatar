@@ -22,6 +22,42 @@ declare module 'vue-advanced-cropper' {
 		top: number
 	}
 
+	interface Position {
+		left: number
+		top: number
+	}
+
+	interface Anchor {
+		bottom: number
+		left: number
+		right: number
+		top: number
+	}
+
+	interface MoveEvent {
+		directions: Position
+		type: 'move'
+	}
+
+	interface DragEvent {
+		anchor: Anchor
+		element: HTMLElement
+		nativeEvent: MouseEvent
+		position: Position
+		previousPosition: Position
+		shift: () => Position
+		type: 'drag'
+	}
+
+	export class ResizeEvent {
+		constructor(directions: Anchor, params: {
+			allowedDirections?: { left?: boolean; right?: boolean; top?: boolean; bottom?: boolean }
+			respectDirection?: 'height' | 'width'
+			preserveAspectRatio?: boolean
+			compensate?: boolean
+		})
+	}
+
 	export interface Image {
 		src: string
 		width: number
@@ -52,7 +88,7 @@ declare module 'vue-advanced-cropper' {
 		setCoordinates: CoordinateSetter
 		refresh: () => void
 		reset: () => void
-		zoom: (quantity: number, center?: Pick<Coordinates, 'left' | 'top'>) => void
+		zoom: (quantity: number, center?: Anchor) => void
 		move: (left: number, top: number) => void
 		rotate: (angle: number) => void
 		flip: (horizontal: boolean, vertical: boolean) => void
@@ -66,4 +102,8 @@ declare module 'vue-advanced-cropper' {
 
 	export const Cropper: CropperElement
 	export const Preview: Component
+	export const CircleStencil: Component
+	export const DraggableElement: Component
+	export const DraggableArea: Component
+	export const StencilPreview: Component
 }
