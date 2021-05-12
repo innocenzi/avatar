@@ -1,12 +1,13 @@
+import { get } from '@vueuse/shared'
 import { computed } from 'vue'
-import { sourceUrl, state } from './use-cropper'
+import { queryUrl, state } from './use-cropper'
 
 /**
  * Whether the form is showing.
  */
 export const shouldBeShown = computed(() => {
 	if (state.inputDialog === undefined) {
-		return !state.source && !sourceUrl
+		return !state.source && !get(queryUrl)
 	}
 
 	return state.inputDialog

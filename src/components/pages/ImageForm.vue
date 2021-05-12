@@ -94,7 +94,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { onMounted, watch } from '@vue/runtime-core'
-import { loadFromFile, loadFromUrl, sourceUrl, state } from '@/hooks/use-cropper'
+import { loadFromFile, loadFromUrl, queryUrl, sourceUrl, state } from '@/hooks/use-cropper'
 import { shouldBeShown, close } from '@/hooks/use-image-form'
 import { get, set } from '@vueuse/shared'
 
@@ -108,8 +108,13 @@ const errors = reactive({
  * loads it (as a convenience).
  */
 onMounted(async() => {
+	if (get(queryUrl)) {
+		set(sourceUrl, get(queryUrl))
+	}
+
 	if (get(sourceUrl) && !await onUrlInput()) {
 		set(sourceUrl, null)
+		state.inputDialog = true
 	}
 })
 
