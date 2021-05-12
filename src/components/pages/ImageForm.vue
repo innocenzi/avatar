@@ -93,10 +93,10 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { onMounted, watch } from '@vue/runtime-core'
-import { loadFromFile, loadFromUrl, queryUrl, sourceUrl, state } from '@/hooks/use-cropper'
+import { watch } from '@vue/runtime-core'
+import { loadFromFile, loadFromUrl, sourceUrl } from '@/hooks/use-cropper'
 import { shouldBeShown, close } from '@/hooks/use-image-form'
-import { get, set } from '@vueuse/shared'
+import { get } from '@vueuse/shared'
 
 const errors = reactive({
 	url: '',
@@ -104,33 +104,9 @@ const errors = reactive({
 })
 
 /**
- * When mounted, if there was a source URL in the storage,
- * loads it (as a convenience).
- */
-onMounted(async() => {
-	if (get(queryUrl)) {
-		set(sourceUrl, get(queryUrl))
-	}
-
-	if (get(sourceUrl) && !await onUrlInput()) {
-		set(sourceUrl, null)
-		state.inputDialog = true
-	}
-})
-
-/**
  * Clears error when needed.
  */
 watch([sourceUrl], () => resetError('url'))
-
-/**
- * Closes the input dialog request when the source changes.
- */
-watch(() => state.source, () => {
-	if (state.source) {
-		state.inputDialog = undefined
-	}
-})
 
 /**
  * Resets errors.

@@ -1,30 +1,47 @@
-import { get } from '@vueuse/shared'
-import { computed } from 'vue'
-import { queryUrl, state } from './use-cropper'
+import { tryOnMounted } from '@vueuse/shared'
+import { computed, watch } from 'vue'
+import { loadFromUrl, queryUrl, sourceUrl, state } from './use-cropper'
+
+/**
+ * When mounted, if there was a source URL in the storage,
+ * loads it (as a convenience).
+ */
+tryOnMounted(async() => {
+	setTimeout(() => {
+		loadFromUrl(queryUrl ?? sourceUrl.value).catch((e) => console.warn('Automatic load failed.', e))
+	}, 1000)
+})
+
+/**
+ * Closes the input dialog request when the source changes.
+ */
+watch(() => state.source, () => {
+	if (state.source) {
+		state.inputDialog = undefined
+	}
+})
 
 /**
  * Whether the form is showing.
  */
 export const shouldBeShown = computed(() => {
 	if (state.inputDialog === undefined) {
-		return !state.source && !get(queryUrl)
+		return !state.source
 	}
 
 	return state.inputDialog
 })
 
 /**
- * Opens the modal.
+ * Requests to open the modal.
  */
 export function show() {
 	state.inputDialog = true
 }
 
 /**
- * Closes the modal only if there is already a source.
+ * Marks the modal opening request as undefined.
  */
 export function close() {
-	if (state.source) {
-		state.inputDialog = false
-	}
+	state.inputDialog = undefined
 }

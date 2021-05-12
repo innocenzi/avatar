@@ -1,5 +1,5 @@
 import { useLocalStorage, useUrlSearchParams } from '@vueuse/core'
-import { get, set } from '@vueuse/shared'
+import { get, set, useDebounce, useDebounceFn } from '@vueuse/shared'
 import { reactive, Ref, ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
 import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
@@ -7,8 +7,8 @@ import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } 
 export const element = ref() as Ref<CropperElement>
 
 export const state = reactive<State>({})
-export const queryUrl = ref(get(useUrlSearchParams<{ url: string }>()).url ?? null)
-export const sourceUrl = useLocalStorage<string>('source-url', get(queryUrl))
+export const queryUrl = new URLSearchParams(window.location.search).get('url')
+export const sourceUrl = useLocalStorage<string>('source-url', null)
 
 export interface State {
 	inputDialog?: boolean
@@ -120,6 +120,8 @@ export function error() {
 	// TODO - This is fired sometimes for no specific reason
 	// A catch would be to store the fact that an error occured,
 	// and clear that state when the cropped loaded successfully
+
+	useDebounceFn(() => reset(), 100)
 }
 
 /**
