@@ -54,9 +54,9 @@ import stencil from '../Stencil.vue'
 
 const previews = [
 	{ size: 32, status: 'online' },
-	{ size: 40, status: 'away' },
+	{ size: 40, status: 'busy' },
 	{ size: 80 },
-	{ size: 32, status: 'busy' },
+	{ size: 40, status: 'away' },
 	{ size: 32, status: 'offline' },
 ]
 
