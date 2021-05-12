@@ -1,4 +1,4 @@
-import { useLocalStorage } from '@vueuse/core'
+import { useLocalStorage, useUrlSearchParams } from '@vueuse/core'
 import { get, set } from '@vueuse/shared'
 import { reactive, Ref, ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
@@ -7,7 +7,7 @@ import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } 
 export const element = ref() as Ref<CropperElement>
 
 export const state = reactive<State>({})
-export const sourceUrl = useLocalStorage<string>('source-url', null)
+export const sourceUrl = useLocalStorage<string>('source-url', get(useUrlSearchParams<{ url: string }>()).url ?? null)
 
 export interface State {
 	inputDialog?: boolean
