@@ -3,16 +3,20 @@
 		<section class="flex flex-col items-center justify-center w-full max-w-lg pointer-events-auto">
 			<img src="/logo.svg" class="w-24 h-24 mb-10" alt="Logo">
 
-			<!-- Manual link -->
+			<!-- Image URL -->
 			<div class="flex flex-col w-full max-w-lg">
-				<label for="url" class="block font-medium text-gray-700 sr-only">Manual URL</label>
-				<!-- Wrapper -->
+				<label for="url" class="block font-medium text-gray-700 sr-only">Image URL</label>
+
+				<!-- Input wrapper -->
 				<div class="flex mt-1 rounded-md shadow-sm">
 					<!-- Input -->
 					<div class="relative z-10 flex items-stretch flex-grow" :class="errors.url ? 'z-10' : ''">
+						<!-- Icon -->
 						<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<mdi:link-variant class="w-5 h-5 text-gray-400" />
 						</div>
+
+						<!-- Actual input -->
 						<input
 							id="url"
 							v-model="sourceUrl"
@@ -22,7 +26,7 @@
 							:class="[
 								'block w-full py-2.5 pl-10 transition rounded-none rounded-l-md',
 								'bg-gray-800 border-gray-700',
-								'focus:outline-none ',
+								'focus:outline-none',
 								'sm:text-sm',
 								errors.url
 									? 'ring-red-300 border-red-300 focus:ring-red-300 focus:border-red-300'
@@ -38,53 +42,37 @@
 						@click="onUrlInput"
 					>
 						<mdi:arrow-right class="w-5 h-5 text-gray-400" />
-						<!-- <span>Use</span> -->
 					</button>
 				</div>
 
 				<!-- Error -->
-				<span v-if="errors.url" class="mt-2 text-sm text-red-300" v-text="errors.url"></span>
+				<span v-if="errors.url" class="mt-2 text-sm text-red-300" v-text="errors.url" />
 			</div>
 
 			<span class="my-6 text-gray-400">or</span>
 
-			<!-- Dotted box -->
-			<div class="flex flex-col max-w-lg _w-full">
+			<!-- Upload button -->
+			<div class="flex flex-col max-w-lg">
 				<!-- Input -->
 				<label
 					for="file-upload"
 					:class="[
-						'flex items-center justify-center',
-						'_border-dashed rounded border-gray-700 border-1 shadow-sm bg-gray-800',
-						'h-full _w-full py-2.5 px-12 _min-h-64',
+						'group flex items-center justify-center',
+						'rounded border-gray-700 border shadow-sm bg-gray-800',
+						'h-full py-2.5 px-12',
 						'cursor-pointer',
-						'hover:border-gray-500',
-						'_focus:border-pink-300',
-						'_focus-within:border-pink-300',
+						'hover:bg-gray-700',
+						'focus-within:ring-2 focus-within:ring-pink-300',
 						'transform transition'
 					]"
 				>
 					<div class="flex items-center space-x-2 text-center">
-						<svg
-							class="w-6 h-6 mx-auto text-gray-400"
-							stroke="currentColor"
-							fill="none"
-							viewBox="0 0 48 48"
-							aria-hidden="true"
-						>
-							<path
-								d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
+						<uil:image-upload class="w-5 h-5 text-gray-500" />
 						<div class="flex">
-							<div class="relative text-sm font-medium text-gray-400 transition rounded-md cursor-pointer group-hover:text-gray-300 hover:text-pink-400 focus-within:outline-none">
-								<span>Upload a file</span>
+							<div class="relative text-sm font-medium text-gray-400 transition rounded-md cursor-pointer group-hover:text-pink-400 focus-within:outline-none">
+								<span>Use a local image</span>
 								<input id="file-upload" name="file-upload" type="file" class="sr-only" @change="onFileInput" />
 							</div>
-							<!-- <p class="pl-1">or drag and drop</p> -->
 						</div>
 					</div>
 				</label>
