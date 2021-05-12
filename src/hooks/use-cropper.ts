@@ -1,7 +1,7 @@
 import { get } from '@vueuse/shared'
 import { reactive, Ref, ref } from 'vue'
-import { CropperElement, CropData, Coordinates, Image } from 'vue-advanced-cropper'
-import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from './mime-type'
+import { CropperElement, CropData } from 'vue-advanced-cropper'
+import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
 
 export const element = ref() as Ref<CropperElement>
 
