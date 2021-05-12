@@ -3958,6 +3958,11 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
+tinykeys@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/tinykeys/-/tinykeys-1.1.2.tgz#f9bf567d44e57166a95ac9a6c1d6408e2caa993c"
+  integrity sha512-BFOdq1hPKYrgx98JgnjMuv/unHXqLULfXC9suTeC7yrNFRMGjlZMO1ZL3aF1s6EIYqwkeHkLNe1R3e2F/VoG0A==
+
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"

@@ -69,7 +69,7 @@
 					<div class="flex items-center space-x-2 text-center">
 						<uil:image-upload class="w-5 h-5 text-gray-500" />
 						<div class="flex">
-							<div class="relative text-sm font-medium text-gray-400 transition rounded-md cursor-pointer group-hover:text-pink-400 focus-within:outline-none">
+							<div class="relative text-sm font-medium text-gray-400 transition rounded-md cursor-pointer focus-within:outline-none">
 								<span>Use a local image</span>
 								<input id="file-upload" name="file-upload" type="file" class="sr-only" @change="onFileInput" />
 							</div>
@@ -86,8 +86,9 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { computed, onMounted, watch } from '@vue/runtime-core'
+import { onMounted, watch } from '@vue/runtime-core'
 import { loadFromFile, loadFromUrl, sourceUrl, state } from '@/hooks/use-cropper'
+import { show, close } from '@/hooks/use-image-form'
 import { get, set } from '@vueuse/shared'
 
 const errors = reactive({
@@ -104,27 +105,6 @@ onMounted(async() => {
 		set(sourceUrl, null)
 	}
 })
-
-/**
- * The modal is openned if there is no new input request
- * or if the source is empty
- */
-const show = computed(() => {
-	if (state.inputDialog === undefined) {
-		return !state.source
-	}
-
-	return state.inputDialog
-})
-
-/**
- * Closes the modal only if there is already a source.
- */
-const close = () => {
-	if (state.source) {
-		state.inputDialog = false
-	}
-}
 
 /**
  * Clears error when needed.

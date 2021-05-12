@@ -1,6 +1,11 @@
 {
   "name": "avatar",
-  "version": "0.0.0",
+  "version": "0.1.0",
+	"license": "MIT",
+	"author": {
+		"name": "Enzo Innocenzi",
+		"email": "enzo@innocenzi.dev"
+	},
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -9,7 +14,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.2.0",
     "@vueuse/core": "^4.9.2",
-    "vite-plugin-fonts": "^0.2.2",
+    "tinykeys": "^1.1.2",
     "vue": "^3.0.11",
     "vue-advanced-cropper": "^2.0"
   },
@@ -24,6 +29,7 @@
     "vite-plugin-components": "^0.9.0",
     "vite-plugin-icons": "^0.5.0",
     "vite-plugin-windicss": "^0.15.10",
+    "vite-plugin-fonts": "^0.2.2",
     "vue-tsc": "^0.1.2"
   }
 }
