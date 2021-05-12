@@ -1,7 +1,7 @@
 <template>
 	<section class="flex flex-col items-center h-full">
-		<div class="flex flex-col items-center justify-center flex-grow w-full">
-			<div class="w-1/2 h-2/3">
+		<div class="flex flex-col items-center justify-center flex-grow w-full px-4">
+			<div class="w-full h-2/3">
 				<cropper
 					v-if="state.source"
 					ref="element"
@@ -13,7 +13,7 @@
 				/>
 			</div>
 
-			<div class="flex items-center justify-center gap-3 mt-4 mb-4 md:gap-8 md:mt-8 md:mb-0">
+			<div class="flex items-center justify-center gap-3 mt-8 mb-4 md:gap-8 md:mt-8 md:mb-0">
 				<preview
 					v-for="({ size, status }, i) in previews"
 					:key="i"

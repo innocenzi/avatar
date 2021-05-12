@@ -41,10 +41,10 @@
 		</tool-group>
 
 		<!-- Separator -->
-		<div />
+		<div class="hidden sm:block" />
 
 		<!-- Actions -->
-		<tool-group class="justify-center" wrapper="gap-2">
+		<tool-group class="justify-center" wrapper="gap-2" keep>
 			<action-button title="Open another image" @click="state.inputDialog = true">
 				<mdi:folder-open-outline class="w-5 h-5" />
 			</action-button>
