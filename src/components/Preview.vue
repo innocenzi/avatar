@@ -10,7 +10,7 @@
 		/>
 
 		<div
-			v-if="width <= 40 && height <= 40"
+			v-if="state.crop && width <= 40 && height <= 40"
 			class="absolute w-2.5 h-2.5 rounded-full bottom-0 right-0 ring ring-gray-900"
 			:class="{
 				'bg-yellow-400': status === 'away',
