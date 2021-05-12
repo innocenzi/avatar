@@ -30,7 +30,17 @@
 				</transition-root>
 			</div>
 
-			<div class="flex items-center justify-center gap-3 mt-8 mb-4 md:gap-8 md:mt-8 md:mb-0">
+			<transition-root
+				:show="!state.loading"
+				as="div"
+				class="flex items-center justify-center gap-3 mt-8 mb-4 md:gap-8 md:mt-8 md:mb-0"
+				enter="transition ease-out duration-300"
+				enter-from="opacity-0"
+				enter-to="opacity-100"
+				leave="transition ease-in duration-200"
+				leave-from="opacity-100"
+				leave-to="opacity-0"
+			>
 				<preview
 					v-for="({ size, status }, i) in previews"
 					:key="i"
@@ -38,7 +48,7 @@
 					:height="size"
 					:status="status"
 				/>
-			</div>
+			</transition-root>
 		</div>
 
 		<section class="flex flex-col items-center flex-shrink-0 w-full px-6">
