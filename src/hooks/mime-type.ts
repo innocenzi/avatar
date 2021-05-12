@@ -3,7 +3,7 @@
  *
  * @see https://norserium.github.io/vue-advanced-cropper/guides/recipes.html#load-image-from-a-disc
  */
-export function getMimeType(file: ArrayBuffer, fallback?: string) {
+export function getMimeTypeFromBuffer(file: ArrayBuffer, fallback?: string) {
 	const byteArray = (new Uint8Array(file)).subarray(0, 4)
 
 	let header = ''
@@ -28,5 +28,43 @@ export function getMimeType(file: ArrayBuffer, fallback?: string) {
 
 		default:
 			return fallback
+	}
+}
+
+/**
+ * Gets the mime type from the given blob.
+ */
+export function getMimeTypeFromBlob(blob: Blob) {
+	const mime = blob.type.split(';').shift()
+
+	if (!mime) {
+		throw new Error('Unable to find mime type.')
+	}
+
+	return mime
+}
+
+/**
+ * Gets a file extension from the given mime type
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+ */
+export function getExtensionFromMimeType(type: string): string | never {
+	switch (type) {
+		case 'image/gif':
+		case 'image/bmp':
+		case 'image/jpeg':
+		case 'image/png':
+		case 'image/tiff':
+		case 'image/webp':
+			return type.split('/').pop()!
+
+		case 'image/vnd.microsoft.icon':
+			return 'ico'
+
+		case 'image/svg+xml':
+			return 'svg'
+
+		default:
+			throw new Error(`Unsupported mime type: ${type}`)
 	}
 }

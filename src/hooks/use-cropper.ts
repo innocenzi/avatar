@@ -1,7 +1,7 @@
 import { get } from '@vueuse/shared'
 import { reactive, Ref, ref } from 'vue'
 import { CropperElement, CropData, Coordinates, Image } from 'vue-advanced-cropper'
-import { getMimeType } from './mime-type'
+import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from './mime-type'
 
 export const element = ref() as Ref<CropperElement>
 
@@ -143,7 +143,7 @@ export async function loadFromFile(file: File) {
 				return reject(new Error('Could not read the file.'))
 			}
 
-			const type = getMimeType(reader.result as ArrayBuffer, file.type)
+			const type = getMimeTypeFromBuffer(reader.result as ArrayBuffer, file.type)
 			if (!type?.startsWith('image')) {
 				return reject(new Error(`Unsupported mime type: ${type}`))
 			}
@@ -165,45 +165,11 @@ export async function loadFromFile(file: File) {
  * Loads an image from an URL.
  */
 export async function loadFromUrl(url: string) {
-	const mimeTypeFromBlob = (blob: Blob) => {
-		const mime = blob.type.split(';').shift()
-
-		if (!mime) {
-			throw new Error('Unable to find mime type.')
-		}
-
-		return mime
-	}
-
-	/**
-	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-	 */
-	const extensionFromMimeType = (type: string): string | never => {
-		switch (type) {
-			case 'image/gif':
-			case 'image/bmp':
-			case 'image/jpeg':
-			case 'image/png':
-			case 'image/tiff':
-			case 'image/webp':
-				return type.split('/').pop()!
-
-			case 'image/vnd.microsoft.icon':
-				return 'ico'
-
-			case 'image/svg+xml':
-				return 'svg'
-
-			default:
-				throw new Error(`Unsupported mime type: ${type}`)
-		}
-	}
-
 	const file = await fetch(url)
 		.then((response) => response.blob())
 		.then((blob) => {
-			const type = mimeTypeFromBlob(blob)
-			const fileName = new URL(url).pathname.split('/').pop() || `cropped.${extensionFromMimeType(type)}`
+			const type = getMimeTypeFromBlob(blob)
+			const fileName = new URL(url).pathname.split('/').pop() || `cropped.${getExtensionFromMimeType(type)}`
 
 			return new File([blob], fileName, { type })
 		})
