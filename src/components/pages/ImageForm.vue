@@ -71,7 +71,14 @@
 						<div class="flex">
 							<div class="relative text-sm font-medium text-gray-400 transition rounded-md cursor-pointer focus-within:outline-none">
 								<span>Use a local image</span>
-								<input id="file-upload" name="file-upload" type="file" class="sr-only" @change="onFileInput" />
+								<input
+									id="file-upload"
+									name="file-upload"
+									accept="image/*"
+									type="file"
+									class="sr-only"
+									@change="onFileInput"
+								/>
 							</div>
 						</div>
 					</div>
