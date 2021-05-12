@@ -4,7 +4,7 @@ import forms from 'windicss/plugin/forms'
 
 export default defineConfig({
 	plugins: [
-		forms
+		forms,
 	],
 	theme: {
 		colors: {
@@ -12,10 +12,10 @@ export default defineConfig({
 			gray: colors.gray,
 		},
 		fontFamily: {
-			sans: ['Inter']
+			sans: ['Inter'],
 		},
 		scale: {
-			'flip': '-1',
-		}
+			flip: '-1',
+		},
 	},
 })
