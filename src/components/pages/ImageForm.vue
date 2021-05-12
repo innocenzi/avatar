@@ -1,5 +1,5 @@
 <template>
-	<modal :show="show" @close="close">
+	<modal :show="shouldBeShown" @close="close">
 		<section class="flex flex-col items-center justify-center w-full max-w-lg pointer-events-auto">
 			<img src="/logo.svg" class="w-24 h-24 mb-10" alt="Logo">
 
@@ -13,7 +13,7 @@
 					<div class="relative z-10 flex items-stretch flex-grow" :class="errors.url ? 'z-10' : ''">
 						<!-- Icon -->
 						<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-							<mdi:link-variant class="w-5 h-5 text-gray-400" />
+							<icon name="mdi:link-variant" class="w-5 h-5 text-gray-400" />
 						</div>
 
 						<!-- Actual input -->
@@ -41,7 +41,7 @@
 						class="relative inline-flex items-center px-4 py-2 -ml-px space-x-2 text-sm font-medium text-gray-300 transition bg-gray-800 border border-l-0 border-gray-700 focus:border-l rounded-r-md hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-pink-300 focus:border-pink-300 hover:z-20 focus:z-20"
 						@click="onUrlInput"
 					>
-						<mdi:arrow-right class="w-5 h-5 text-gray-400" />
+						<icon name="mdi:arrow-right" class="w-5 h-5 text-gray-400" />
 					</button>
 				</div>
 
@@ -67,7 +67,7 @@
 					]"
 				>
 					<div class="flex items-center space-x-2 text-center">
-						<uil:image-upload class="w-5 h-5 text-gray-500" />
+						<icon name="uil:image-upload" class="w-5 h-5 text-gray-500" />
 						<div class="flex">
 							<div class="relative text-sm font-medium text-gray-400 transition rounded-md cursor-pointer focus-within:outline-none">
 								<span>Use a local image</span>
@@ -95,7 +95,7 @@
 import { reactive } from 'vue'
 import { onMounted, watch } from '@vue/runtime-core'
 import { loadFromFile, loadFromUrl, sourceUrl, state } from '@/hooks/use-cropper'
-import { show, close } from '@/hooks/use-image-form'
+import { shouldBeShown, close } from '@/hooks/use-image-form'
 import { get, set } from '@vueuse/shared'
 
 const errors = reactive({

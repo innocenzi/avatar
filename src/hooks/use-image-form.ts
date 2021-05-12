@@ -1,16 +1,23 @@
 import { computed } from 'vue'
-import { state } from './use-cropper'
+import { sourceUrl, state } from './use-cropper'
 
 /**
  * Whether the form is showing.
  */
-export const show = computed(() => {
+export const shouldBeShown = computed(() => {
 	if (state.inputDialog === undefined) {
-		return !state.source
+		return !state.source && !sourceUrl
 	}
 
 	return state.inputDialog
 })
+
+/**
+ * Opens the modal.
+ */
+export function show() {
+	state.inputDialog = true
+}
 
 /**
  * Closes the modal only if there is already a source.

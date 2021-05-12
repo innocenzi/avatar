@@ -1,5 +1,5 @@
 import { useLocalStorage, useUrlSearchParams } from '@vueuse/core'
-import { get, set } from '@vueuse/shared'
+import { get, set, useCounter } from '@vueuse/shared'
 import { reactive, Ref, ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
 import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
@@ -43,9 +43,16 @@ export function rotate(angle: number) {
 }
 
 /**
+ * Resets the cropper.
+ */
+export function reset() {
+	get(element).reset()
+}
+
+/**
  * Moves the stencil.
  */
-export function transform(mode: 'center' | 'maximize') {
+export function transform(mode: 'center' | 'maximize' | 'reset') {
 	if (mode === 'center') {
 		get(element).setCoordinates(({ imageSize, coordinates }) => ({
 			left: imageSize.width / 2 - coordinates.width / 2,
@@ -69,6 +76,10 @@ export function transform(mode: 'center' | 'maximize') {
 				top: center.top - coordinates.height / 2,
 			}),
 		])
+	}
+
+	if (mode === 'reset') {
+		reset()
 	}
 }
 
@@ -99,6 +110,15 @@ export function flip(mode: 'horizontal' | 'vertical') {
  */
 export function change(crop: CropData) {
 	state.crop = crop
+}
+
+/**
+ * Handles an error event.
+ */
+export function error() {
+	// TODO - This is fired sometimes for no specific reason
+	// A catch would be to store the fact that an error occured,
+	// and clear that state when the cropped loaded successfully
 }
 
 /**

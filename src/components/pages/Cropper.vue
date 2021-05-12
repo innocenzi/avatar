@@ -12,6 +12,7 @@
 					image-class="select-none rounded-lg absolute origin-center !max-w-none overflow-hidden opacity-20 transition-opacity"
 					image-restriction="none"
 					@change="change"
+					@error="error"
 				/>
 			</div>
 
@@ -46,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { state, element, change } from '@/hooks/use-cropper'
+import { state, element, change, error } from '@/hooks/use-cropper'
 import { Cropper } from 'vue-advanced-cropper'
 import { computed } from 'vue'
 import stencil from '../Stencil.vue'

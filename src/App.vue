@@ -4,7 +4,8 @@
 </template>
 
 <script setup lang="ts">
-import { registerShortcuts } from '@/hooks/use-shortcuts'
+import { useShortcuts } from '@/hooks/use-tools'
+import { tryOnUnmounted } from '@vueuse/shared'
 
-registerShortcuts()
+tryOnUnmounted(useShortcuts())
 </script>
