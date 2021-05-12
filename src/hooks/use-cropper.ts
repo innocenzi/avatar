@@ -6,11 +6,14 @@ import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } 
 
 export const element = ref() as Ref<CropperElement>
 
-export const state = reactive<State>({})
 export const queryUrl = new URLSearchParams(window.location.search).get('url')
 export const sourceUrl = useLocalStorage<string>('source-url', null)
+export const state = reactive<State>({
+	loading: false,
+})
 
 export interface State {
+	loading: boolean
 	inputDialog?: boolean
 
 	source?: {
@@ -153,6 +156,8 @@ export async function download() {
  * Loads an image from a file.
  */
 export async function loadFromFile(file: File) {
+	state.loading = true
+
 	// Revokes the previous URL if it exists, for performance reasons.
 	if (state.source?.url) {
 		URL.revokeObjectURL(state.source.url)
@@ -164,6 +169,8 @@ export async function loadFromFile(file: File) {
 
 	return new Promise((resolve, reject) => {
 		reader.addEventListener('load', () => {
+			state.loading = false
+
 			if (!reader.result) {
 				return reject(new Error('Could not read the file.'))
 			}
@@ -189,7 +196,12 @@ export async function loadFromFile(file: File) {
 /**
  * Loads an image from an URL.
  */
-export async function loadFromUrl(url: string) {
+export async function loadFromUrl(url: string | null) {
+	if (!url) {
+		return
+	}
+
+	state.loading = true
 	const file = await fetch(url)
 		.then((response) => response.blob())
 		.then((blob) => {

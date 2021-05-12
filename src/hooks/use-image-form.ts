@@ -1,15 +1,13 @@
 import { tryOnMounted } from '@vueuse/shared'
 import { computed, watch } from 'vue'
-import { loadFromUrl, queryUrl, sourceUrl, state } from './use-cropper'
+import { loadFromUrl, queryUrl, state } from './use-cropper'
 
 /**
  * When mounted, if there was a source URL in the storage,
  * loads it (as a convenience).
  */
 tryOnMounted(async() => {
-	setTimeout(() => {
-		loadFromUrl(queryUrl ?? sourceUrl.value).catch((e) => console.warn('Automatic load failed.', e))
-	}, 1000)
+	loadFromUrl(queryUrl).catch((e) => console.warn('Automatic load failed.', e))
 })
 
 /**
@@ -26,7 +24,7 @@ watch(() => state.source, () => {
  */
 export const shouldBeShown = computed(() => {
 	if (state.inputDialog === undefined) {
-		return !state.source
+		return !state.source && !state.loading
 	}
 
 	return state.inputDialog

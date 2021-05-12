@@ -1,9 +1,9 @@
 <template>
 	<section class="flex flex-col items-center h-full">
 		<div class="flex flex-col items-center justify-center flex-grow w-full px-4">
-			<div class="w-full h-2/3 rounded-lg overflow-hidden">
+			<div class="relative w-full h-2/3 rounded-lg overflow-hidden">
 				<cropper
-					v-if="state.source"
+					v-if="state.source && !state.loading"
 					ref="element"
 					:src="state.source.url"
 					:debounce="false"
@@ -14,6 +14,20 @@
 					@change="change"
 					@error="error"
 				/>
+
+				<transition-root
+					:show="state.loading"
+					as="div"
+					class="absolute inset-0 items-center justify-center flex"
+					enter="transition ease-out duration-300"
+					enter-from="opacity-0"
+					enter-to="opacity-100"
+					leave="transition ease-in duration-200"
+					leave-from="opacity-100"
+					leave-to="opacity-0"
+				>
+					<icon class="w-20 h-20 opacity-5 text-white animate-spin" style="animation-duration: 3s" name="mdi:cog-clockwise" />
+				</transition-root>
 			</div>
 
 			<div class="flex items-center justify-center gap-3 mt-8 mb-4 md:gap-8 md:mt-8 md:mb-0">
@@ -47,6 +61,7 @@
 </template>
 
 <script setup lang="ts">
+import { TransitionRoot } from '@headlessui/vue'
 import { state, element, change, error } from '@/hooks/use-cropper'
 import { Cropper } from 'vue-advanced-cropper'
 import { computed } from 'vue'
