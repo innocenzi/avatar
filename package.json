@@ -16,7 +16,7 @@
     "@vueuse/core": "^4.9.4",
     "tinykeys": "^1.1.2",
     "vue": "^3.0.11",
-    "vue-advanced-cropper": "^2.2.1"
+    "vue-advanced-cropper": "^2.3.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.6.5",
