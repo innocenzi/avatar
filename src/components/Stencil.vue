@@ -133,11 +133,4 @@ function onResize(dragEvent: DragEvent, corner: `${'top' | 'bottom'}-${'left' | 
 function onResizeEnd() {
 	emit('resize-end')
 }
-
-// function aspectRatios() {
-// 	return {
-// 		minimum: 1,
-// 		maximum: 1,
-// 	}
-// }
 </script>
