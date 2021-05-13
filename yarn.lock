@@ -718,18 +718,18 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.11.tgz#20d22dd0da7d358bb21c17f9bde8628152642c77"
   integrity sha512-b+zB8A2so8eCE0JsxjL24J7vdGl8rzPQ09hZNhystm+KqSbKcAej1A+Hbva1rCMmTTqA+hFnUSDc5kouEo0JzA==
 
-"@vueuse/core@^4.9.4":
-  version "4.9.4"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.9.4.tgz#f95cc6b3ce8acace66077c36528495c2c1ba91a5"
-  integrity sha512-G0RKYnMyEUaHPZu696ZSei9XLWdiJf49tCz9gDHLkM8GMYqfAn5DMBa7XITLpQGWwYAtrcNunMsTdWxd/EuHjA==
+"@vueuse/core@^4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.10.0.tgz#d7da6df9ec7c703bb6e7127faf59fec22b3b9eb3"
+  integrity sha512-MEJKnp5ZQFTtQnHoUvP/yi6nRbr6S1NcaNe3L6PZi4n9Gm4JiAd5Rx0fS/xhaTKMOzsTbN1gTzoM1Gl3BDbjtA==
   dependencies:
-    "@vueuse/shared" "4.9.4"
+    "@vueuse/shared" "4.10.0"
     vue-demi "*"
 
-"@vueuse/shared@4.9.4":
-  version "4.9.4"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-4.9.4.tgz#ef9bdc76dade3ca4a2a033abb2e8dc3871580c3f"
-  integrity sha512-bt9gMGX919UQSMrNJ00Hvc4SyiRwI5NVjrkUgXgrGCLdvYtcYv2EHHx6lbFanIcfuZxGDbNJGqOfuDteaLI9UA==
+"@vueuse/shared@4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-4.10.0.tgz#a0279af6fa332b3f47fb84e078841743a74d94fa"
+  integrity sha512-zomWAt6Q2RNa9Wu3POUDJJqyAo6zlf4trsUu9goOQKNKE+G95kTKHQJoj4K3XOkjMktND24xrkvyOVGbp3lqVw==
   dependencies:
     vue-demi "*"
 
@@ -1738,7 +1738,7 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-esbuild@^0.11.19:
+esbuild@^0.11.20:
   version "0.11.20"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.20.tgz#7cefa1aee8b372c184e42457885f7ce5d3e62a1e"
   integrity sha512-QOZrVpN/Yz74xfat0H6euSgn3RnwLevY1mJTEXneukz1ln9qB+ieaerRMzSeETpz/UJWsBMzRVR/andBht5WKw==
@@ -5305,10 +5305,10 @@ vfile@^4.0.0, vfile@^4.0.1:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
-vite-plugin-components@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-components/-/vite-plugin-components-0.9.0.tgz#b50cb11ed29efd4c682ee76da2999dd47627483a"
-  integrity sha512-ZtJn2gt6H9Nsd77qWvqr69Wwv+XgY0OU7WpjGZ+1p22O5ImOQT5CUx364bXUpgQSDCROnLtxsKga2wbGiPMaeA==
+vite-plugin-components@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-components/-/vite-plugin-components-0.9.1.tgz#e65a2970f5872b1b186236ada155d303669af834"
+  integrity sha512-rD7RrqrrvSGdXX1HWecE8xvDTFASYtqVgVRHfK8GZNET4wD+JeJITIOaDx4KdvYDIchUAvCNnSLXj6Ll1H+ZGQ==
   dependencies:
     chokidar "^3.5.1"
     debug "^4.3.2"
@@ -5343,12 +5343,12 @@ vite-plugin-windicss@^0.15.10:
     debug "^4.3.2"
     windicss "^2.5.14"
 
-vite@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.3.1.tgz#0786c2e097a744f122ae8c0319d0a6910b32d41c"
-  integrity sha512-yvcLclv/G0syHL+bBtahdaymH0x6La8kbTlnAssRH+XFvDNb8VPRruHhILCCmZgtx6Zu/UKNFTQnQ4Gk/omyUA==
+vite@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.3.2.tgz#cfac76b04d4dee1c7303b55f563b5b62d32f41fe"
+  integrity sha512-QhLdOompDrfkyryCNTts9HE+eJhvhN9ibKNJ5Q8DpQai+6nOsuIlaveZNg67e1O/2QaWqXeBo82eHnAs1De2bQ==
   dependencies:
-    esbuild "^0.11.19"
+    esbuild "^0.11.20"
     postcss "^8.2.10"
     resolve "^1.19.0"
     rollup "^2.38.5"
@@ -5492,10 +5492,10 @@ vscode-vue-languageservice@^0.25.2:
     vscode-pug-languageservice "^0.25.3"
     vscode-typescript-languageservice "^0.25.3"
 
-vue-advanced-cropper@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/vue-advanced-cropper/-/vue-advanced-cropper-2.3.0.tgz#e3f4573567ef1f939fa205c0c5f365b738dbddef"
-  integrity sha512-ty5u8qwbYFydEFPVSCVpUpbPNjcDAejcaisD8UqhgxtA/kwqFF6e/SLIBtxdfT1smDiKrvBBsn9glzpqh6yBiw==
+vue-advanced-cropper@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/vue-advanced-cropper/-/vue-advanced-cropper-2.3.1.tgz#e90206302bc398c1cdadcc9d055ad72432ab38eb"
+  integrity sha512-3WYAvBuMg4PLnzIPLHbsRwHxZpqXf15pAF1LEE50CgLjWcPwzJIJilelWDmzAxvE+6O39tRRQFCEAERUttrMjA==
   dependencies:
     classnames "^2.2.6"
     debounce "^1.2.0"
