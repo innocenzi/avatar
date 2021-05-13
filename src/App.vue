@@ -1,5 +1,9 @@
 <template>
 	<section class="flex flex-col items-center h-full">
+		<header class="p-10 hidden md:block w-full">
+			<shortcuts-popover />
+		</header>
+
 		<cropper />
 
 		<section class="flex flex-col items-center flex-shrink-0 w-full px-6">

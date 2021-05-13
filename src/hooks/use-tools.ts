@@ -3,7 +3,7 @@ import { download, zoom, rotate, flip, transform } from './use-cropper'
 import { show } from './use-image-form'
 
 export interface Tool {
-	action: (event: KeyboardEvent) => void
+	action: (event?: KeyboardEvent) => void
 	description: string
 	icon?: string
 	keybinding?: string
@@ -37,7 +37,7 @@ export const toolbar: ToolbarGroup[] = [
 		name: 'Zoom',
 		actions: [
 			{ keybinding: 'Shift+Minus', description: 'Zoom out the base image', icon: 'mdi:magnify-minus-outline', action: () => zoom('out') },
-			{ keybinding: 'Shift++', description: 'Zoom in the base image', icon: 'mdi:magnify-plus-outline', action: () => zoom('in') },
+			{ keybinding: 'Shift+Plus', description: 'Zoom in the base image', icon: 'mdi:magnify-plus-outline', action: () => zoom('in') },
 		],
 	},
 	{

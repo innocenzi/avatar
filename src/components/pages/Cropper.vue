@@ -1,6 +1,6 @@
 <template>
-	<div class="flex flex-col items-center justify-center flex-grow w-full px-4">
-		<div class="relative w-full h-2/3 rounded-lg overflow-hidden">
+	<div class="flex flex-col items-center justify-center flex-grow w-full px-4 mt-4 md:mt-0">
+		<div class="relative w-full h-full rounded-lg overflow-hidden">
 			<cropper
 				v-if="state.source && !state.loading"
 				ref="element"
@@ -32,7 +32,7 @@
 		<transition-root
 			:show="!state.loading"
 			as="div"
-			class="flex items-center justify-center gap-3 mt-8 mb-4 md:gap-8 md:mt-8 md:mb-0"
+			class="flex items-center justify-center gap-3 m-8"
 			enter="transition ease-out duration-300"
 			enter-from="opacity-0"
 			enter-to="opacity-100"
