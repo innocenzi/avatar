@@ -1,39 +1,23 @@
 <template>
-	<section class="flex flex-col items-center h-full">
-		<div class="flex flex-col items-center justify-center flex-grow w-full px-4">
-			<div class="relative w-full h-2/3 rounded-lg overflow-hidden">
-				<cropper
-					v-if="state.source && !state.loading"
-					ref="element"
-					:src="state.source.url"
-					:debounce="false"
-					:stencil-component="stencil"
-					:stencil-props="settings"
-					image-class="select-none rounded-lg absolute origin-center !max-w-none overflow-hidden opacity-20 transition-opacity"
-					image-restriction="none"
-					@change="change"
-					@error="error"
-				/>
-
-				<transition-root
-					:show="state.loading"
-					as="div"
-					class="absolute inset-0 items-center justify-center flex"
-					enter="transition ease-out duration-300"
-					enter-from="opacity-0"
-					enter-to="opacity-100"
-					leave="transition ease-in duration-200"
-					leave-from="opacity-100"
-					leave-to="opacity-0"
-				>
-					<icon class="w-20 h-20 opacity-5 text-white animate-spin" style="animation-duration: 3s" name="mdi:cog-clockwise" />
-				</transition-root>
-			</div>
+	<div class="flex flex-col items-center justify-center flex-grow w-full px-4">
+		<div class="relative w-full h-2/3 rounded-lg overflow-hidden">
+			<cropper
+				v-if="state.source && !state.loading"
+				ref="element"
+				:src="state.source.url"
+				:debounce="false"
+				:stencil-component="stencil"
+				:stencil-props="settings"
+				image-class="select-none rounded-lg absolute origin-center !max-w-none overflow-hidden opacity-20 transition-opacity"
+				image-restriction="none"
+				@change="change"
+				@error="error"
+			/>
 
 			<transition-root
-				:show="!state.loading"
+				:show="state.loading"
 				as="div"
-				class="flex items-center justify-center gap-3 mt-8 mb-4 md:gap-8 md:mt-8 md:mb-0"
+				class="absolute inset-0 items-center justify-center flex"
 				enter="transition ease-out duration-300"
 				enter-from="opacity-0"
 				enter-to="opacity-100"
@@ -41,33 +25,30 @@
 				leave-from="opacity-100"
 				leave-to="opacity-0"
 			>
-				<preview
-					v-for="({ size, status }, i) in previews"
-					:key="i"
-					:width="size"
-					:height="size"
-					:status="status"
-				/>
+				<icon class="w-20 h-20 opacity-5 text-white animate-spin" style="animation-duration: 3s" name="mdi:cog-clockwise" />
 			</transition-root>
 		</div>
 
-		<section class="flex flex-col items-center flex-shrink-0 w-full px-6">
-			<toolbar />
-			<footer class="flex text-center items-center justify-center p-8 space-x-8 text-xs text-gray-500">
-				<footer-link href="https://github.com/innocenzi/avatar">
-					GitHub
-				</footer-link>
-				<span>
-					<span class="hidden sm:inline">Made with <span class="text-[0.7rem]">❤</span>&nbsp;</span>
-					<span>by&nbsp;</span>
-					<footer-link class="font-bold" href="https://twitter.com/enzoinnocenzi">Enzo Innocenzi</footer-link>
-				</span>
-				<footer-link href="https://github.com/innocenzi/avatar/issues">
-					Feedback
-				</footer-link>
-			</footer>
-		</section>
-	</section>
+		<transition-root
+			:show="!state.loading"
+			as="div"
+			class="flex items-center justify-center gap-3 mt-8 mb-4 md:gap-8 md:mt-8 md:mb-0"
+			enter="transition ease-out duration-300"
+			enter-from="opacity-0"
+			enter-to="opacity-100"
+			leave="transition ease-in duration-200"
+			leave-from="opacity-100"
+			leave-to="opacity-0"
+		>
+			<preview
+				v-for="({ size, status }, i) in previews"
+				:key="i"
+				:width="size"
+				:height="size"
+				:status="status"
+			/>
+		</transition-root>
+	</div>
 </template>
 
 <script setup lang="ts">
