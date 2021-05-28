@@ -3,6 +3,8 @@ import { get, set, useDebounceFn } from '@vueuse/shared'
 import { reactive, Ref, ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
 import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
+import { GifReader } from '../libs/gif-reader.js'
+import type { Frame } from '../libs/gif-reader.js'
 
 export const element = ref() as Ref<CropperElement>
 
@@ -128,6 +130,86 @@ export function error() {
 }
 
 /**
+ * Gets a single cropped image from the canvas.
+ */
+export async function getCroppedImage(): Promise<string> {
+	if (state.source?.type === 'image/gif') {
+		return await getCroppedGIF()
+	}
+
+	const blob = await new Promise((resolve) => get(element)?.getResult().canvas.toBlob((blob) => resolve(blob)))
+
+	return URL.createObjectURL(blob)
+}
+
+/**
+ * Gets a cropped GIF object URL.
+ */
+export async function getCroppedGIF(): Promise<string> {
+	const buffer = await new Promise<Uint8Array>((resolve) => {
+		const xhr = new XMLHttpRequest()
+		xhr.open('GET', state.source!.url, true)
+		xhr.responseType = 'arraybuffer'
+		xhr.addEventListener('load', () => resolve(new Uint8Array(xhr.response)))
+		xhr.send()
+	})
+
+	const reader = new GifReader(buffer)
+	const frames = await Promise.all(Array(reader.numFrames()).fill({}).map((_, i) => {
+		return new Promise<Frame>((resolve) => {
+			const frame = reader.frameInfo(i)
+			frame.pixels = new Uint8ClampedArray(reader.width * reader.height * 4)
+			reader.decodeAndBlitFrameBGRA(i, frame.pixels)
+
+			resolve(frame)
+		})
+	}))
+
+	return new Promise<string>((resolve) => {
+		const gif = new GIF({
+			workerScript: '/scripts/gif.worker.js',
+			workers: 5,
+			quality: 1,
+			debug: true,
+			width: reader.width,
+			height: reader.height,
+		})
+
+		let i = 0
+		for (const frame of frames) {
+			const canvas = document.createElement('canvas')
+			const context = canvas.getContext('2d')
+			canvas.width = frame.width
+			canvas.height = frame.height
+
+			if (!context) {
+				throw new Error('Could not create context')
+			}
+
+			const data = context.createImageData(reader.width, reader.height)
+			data.data.set(frame.pixels)
+
+			context.putImageData(data, -frame.x, -frame.y)
+
+			console.log('adding frame', i++)
+			document.body.appendChild(canvas)
+
+			gif.addFrame(canvas, { delay: frame.delay })
+		}
+
+		gif.on('finished', (blob: Blob) => {
+			gif.freeWorkers.forEach((w) => w.terminate())
+			gif.abort()
+			console.log('end')
+
+			return resolve(URL.createObjectURL(blob))
+		})
+
+		gif.render()
+	})
+}
+
+/**
  * Downloads the cropped image.
  */
 export async function download() {
@@ -135,8 +217,7 @@ export async function download() {
 		return
 	}
 
-	const blob = await new Promise((resolve) => get(element)?.getResult().canvas.toBlob((blob) => resolve(blob)))
-	const url = URL.createObjectURL(blob)
+	const url = await getCroppedImage()
 	const a = document.createElement('a')
 	a.href = url
 	a.download = state.source?.name.replace('.', '-cropped.') || 'download'
