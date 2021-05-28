@@ -13,23 +13,23 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.2.0",
-    "@vueuse/core": "^4.10.0",
-    "tinykeys": "^1.1.2",
+    "@vueuse/core": "^4.11.1",
+    "tinykeys": "^1.1.3",
     "vue": "^3.0.11",
-    "vue-advanced-cropper": "^2.3.1"
+    "vue-advanced-cropper": "^2.4.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.6.5",
-    "@iconify/json": "^1.1.342",
+    "@iconify/json": "^1.1.350",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.11",
-    "eslint": "^7.26.0",
-    "typescript": "^4.2.4",
-    "vite": "^2.3.2",
-    "vite-plugin-components": "^0.9.1",
+    "eslint": "^7.27.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.4",
+    "vite-plugin-components": "^0.10.3",
     "vite-plugin-fonts": "^0.2.2",
-    "vite-plugin-svg-icons": "^0.5.0",
-    "vite-plugin-windicss": "^0.15.10",
-    "vue-tsc": "^0.1.2"
+    "vite-plugin-svg-icons": "^0.6.2",
+    "vite-plugin-windicss": "^0.16.7",
+    "vue-tsc": "^0.1.6"
   }
 }
