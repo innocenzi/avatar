@@ -155,7 +155,11 @@ export async function download() {
 /**
  * Loads an image from a file.
  */
-export async function loadFromFile(file: File) {
+export async function loadFromFile(file: File | null) {
+	if (!file) {
+		return
+	}
+
 	state.loading = true
 
 	// Revokes the previous URL if it exists, for performance reasons.

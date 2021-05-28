@@ -3,7 +3,7 @@ import { download, zoom, rotate, flip, transform } from './use-cropper'
 import { show } from './use-image-form'
 
 export interface Tool {
-	action: (event?: KeyboardEvent) => void
+	action?: (event?: KeyboardEvent) => void
 	description: string
 	icon?: string
 	keybinding?: string
@@ -51,6 +51,7 @@ export const toolbar: ToolbarGroup[] = [
 	{
 		actions: [
 			{ keybinding: 'Shift+o', description: 'Open an image', icon: 'mdi:folder-open-outline', primary: '', action: () => show() },
+			{ keybinding: 'Ctrl+v', description: 'Open an image from the clipboard' },
 			{ keybinding: 'Shift+s', description: 'Download the current crop', icon: 'uil:save', primary: 'Download', action: () => download() },
 		],
 	},
@@ -59,13 +60,13 @@ export const toolbar: ToolbarGroup[] = [
 export function useShortcuts() {
 	const shortcuts = Object.fromEntries(toolbar
 		.flatMap(({ actions }) => actions)
-		.filter(({ documented, keybinding }) => documented !== false && keybinding)
+		.filter(({ documented, keybinding, action }) => documented !== false && keybinding && action)
 		.map(({ keybinding, action }) => ([
 			keybinding,
 			(e: KeyboardEvent) => {
 				e.preventDefault()
 				e.stopPropagation()
-				action(e)
+				action?.(e)
 			},
 		])))
 

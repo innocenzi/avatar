@@ -6,14 +6,14 @@
 		</template>
 
 		<template #default>
-			<span class="font-bold text-lg mb-4">Shortcuts</span>
+			<span class="mb-4 text-lg font-bold">Shortcuts</span>
 			<div class="flex flex-col space-y-6">
 				<div v-for="(group, i) in toolbar" :key="`${group.name}-${i}`" class="flex flex-col space-y-2">
 					<button
 						v-for="tool in unique(group.actions)"
 						:key="`${tool.keybinding}-${i}`"
-						class="flex justify-between items-center text-white text-opacity-40 rounded focus-visible:ring focus-visible:ring-offset-3 focus-visible:ring-offset-gray-800 focus-visible:ring-pink-300 focus-visible:ring-opacity-100 focus:outline-none focus-visible:text-pink-300"
-						@click="() => tool.action()"
+						class="flex items-center justify-between text-white rounded text-opacity-40 focus-visible:ring focus-visible:ring-offset-3 focus-visible:ring-offset-gray-800 focus-visible:ring-pink-300 focus-visible:ring-opacity-100 focus:outline-none focus-visible:text-pink-300"
+						@click="() => tool.action?.()"
 					>
 						<span class="mr-20 text-sm" v-text="tool.description" />
 						<shortcut :keybindings="tool.keybinding" />

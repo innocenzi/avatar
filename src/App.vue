@@ -1,6 +1,6 @@
 <template>
 	<section class="flex flex-col items-center h-full">
-		<header class="p-10 hidden md:block w-full">
+		<header class="hidden w-full p-10 md:block">
 			<shortcuts-popover />
 		</header>
 
@@ -8,7 +8,7 @@
 
 		<section class="flex flex-col items-center flex-shrink-0 w-full px-6">
 			<toolbar />
-			<footer class="flex text-center items-center justify-center p-8 space-x-8 text-xs text-gray-500">
+			<footer class="flex items-center justify-center p-8 space-x-8 text-xs text-center text-gray-500">
 				<footer-link href="https://github.com/innocenzi/avatar">
 					GitHub
 				</footer-link>
@@ -28,7 +28,30 @@
 
 <script setup lang="ts">
 import { useShortcuts } from '@/hooks/use-tools'
-import { tryOnUnmounted } from '@vueuse/shared'
+import { tryOnMounted } from '@vueuse/shared'
+import { loadFromFile } from './hooks/use-cropper'
 
-tryOnUnmounted(useShortcuts())
+tryOnMounted(useShortcuts)
+
+// @ts-expect-error
+window.addEventListener('paste', (paste: ClipboardEvent) => {
+	const items = paste.clipboardData?.items
+
+	if (!items) {
+		return
+	}
+
+	for (let i = 0; i < items.length; i++) {
+		// Skip content if not image
+		if (!items[i].type.includes('image')) {
+			continue
+		}
+
+		// Retrieve image on clipboard as blob
+		loadFromFile(items[i].getAsFile())
+
+		// We only want one image
+		return
+	}
+})
 </script>
