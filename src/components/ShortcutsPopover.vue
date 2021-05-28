@@ -12,7 +12,12 @@
 					<button
 						v-for="tool in unique(group.actions)"
 						:key="`${tool.keybinding}-${i}`"
-						class="flex items-center justify-between text-white rounded text-opacity-40 focus-visible:ring focus-visible:ring-offset-3 focus-visible:ring-offset-gray-800 focus-visible:ring-pink-300 focus-visible:ring-opacity-100 focus:outline-none focus-visible:text-pink-300"
+						:disabled="!tool.action"
+						class="flex items-center justify-between text-white transition rounded text-opacity-40 focus-visible:ring focus-visible:ring-offset-3 focus-visible:ring-offset-gray-800 focus-visible:ring-pink-300 focus-visible:ring-opacity-100 focus:outline-none focus-visible:text-pink-300"
+						:class="{
+							'hover:text-pink-200 hover:text-opacity-80': tool.action,
+							'cursor-default': !tool.action
+						}"
 						@click="() => tool.action?.()"
 					>
 						<span class="mr-20 text-sm" v-text="tool.description" />
