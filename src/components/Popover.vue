@@ -36,8 +36,13 @@
 			leave-from-class="scale-100 opacity-100"
 			leave-to-class="scale-90 opacity-0"
 		>
-			<popover-panel class="z-20 absolute mt-8 p-6 flex flex-col rounded-lg bg-gray-800 border border-gray-700">
-				<slot />
+			<popover-panel as="template">
+				<div
+					class="z-20 absolute mt-8 p-6 flex flex-col overflow-y-auto rounded-lg bg-gray-800 border border-gray-700"
+					style="max-height: calc(100vh - 9rem)"
+				>
+					<slot />
+				</div>
 			</popover-panel>
 		</transition>
 	</popover>
