@@ -27,14 +27,13 @@
 </template>
 
 <script setup lang="ts">
+import { useEventListener, tryOnMounted } from '@vueuse/core'
 import { useShortcuts } from '@/hooks/use-tools'
-import { tryOnMounted } from '@vueuse/shared'
 import { loadFromFile } from './hooks/use-cropper'
 
 tryOnMounted(useShortcuts)
 
-// @ts-expect-error
-window.addEventListener('paste', (paste: ClipboardEvent) => {
+useEventListener(window, 'paste', (paste: ClipboardEvent) => {
 	const items = paste.clipboardData?.items
 
 	if (!items) {
