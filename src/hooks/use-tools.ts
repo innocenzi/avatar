@@ -51,7 +51,7 @@ export const toolbar: ToolbarGroup[] = [
 	{
 		actions: [
 			{ keybinding: 'Shift+o', description: 'Open an image', icon: 'mdi:folder-open-outline', primary: '', action: () => show() },
-			{ keybinding: 'Ctrl+v', description: 'Open an image from the clipboard' },
+			{ keybinding: 'Ctrl+v', description: 'Open an image from the clipboard', documented: false },
 			{ keybinding: 'Shift+s', description: 'Download the current crop', icon: 'uil:save', primary: 'Download', action: () => download() },
 		],
 	},

@@ -22,7 +22,9 @@ import { toolbar } from '@/hooks/use-tools'
 import type { Tool } from '@/hooks/use-tools'
 
 function unique(tools: Tool[]) {
-	return tools.filter((value, index, self) => self.findIndex((candidate) => value.icon === candidate.icon) === index)
+	return tools
+		.filter((value, index, self) => self.findIndex((candidate) => value.icon === candidate.icon) === index)
+		.filter((tool) => tool.documented !== false)
 }
 
 function description(tool: Tool) {
