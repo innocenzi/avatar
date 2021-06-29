@@ -1,7 +1,7 @@
 <template>
 	<modal :show="shouldBeShown" @close="close">
 		<section class="flex flex-col items-center justify-center w-full max-w-lg pointer-events-auto">
-			<img src="/logo.svg" class="w-24 h-24 mb-10" alt="Logo">
+			<img src="/logo.svg" class="w-24 h-24 mb-10" alt="Logo" />
 
 			<!-- Image URL -->
 			<div class="flex flex-col w-full max-w-lg">
@@ -85,7 +85,7 @@
 				</label>
 
 				<!-- Error -->
-				<span v-if="errors.file" class="mt-2 text-sm text-red-300" v-text="errors.file"></span>
+				<span v-if="errors.file" class="mt-2 text-sm text-red-300" v-text="errors.file" />
 			</div>
 		</section>
 	</modal>

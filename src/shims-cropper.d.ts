@@ -83,6 +83,7 @@ declare module 'vue-advanced-cropper' {
 	export type CoordinateSetter = (param: Coordinates | Coordinates[] | CoordinateSetterCallback | CoordinateSetterCallback[]) => void
 
 	export type CropperElement = Component & {
+		onChange?: (data: CropData) => void
 		coordinates: Coordinates
 		customImageTransforms: Transforms
 		setCoordinates: CoordinateSetter
