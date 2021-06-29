@@ -1,4 +1,4 @@
-import { tryOnMounted } from '@vueuse/shared'
+import { tryOnMounted } from '@vueuse/core'
 import { computed, watch } from 'vue'
 import { loadFromUrl, queryUrl, state } from './use-cropper'
 

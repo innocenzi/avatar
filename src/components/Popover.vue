@@ -1,5 +1,5 @@
 <template>
-	<popover v-slot="{ open }">
+	<Popover v-slot="{ open }">
 		<popover-button
 			:class="[
 				'px-3 py-2.5 space-x-1 flex items-center justify-center',
@@ -45,7 +45,7 @@
 				</div>
 			</popover-panel>
 		</transition>
-	</popover>
+	</Popover>
 </template>
 
 <script setup lang="ts">

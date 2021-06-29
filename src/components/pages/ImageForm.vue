@@ -92,11 +92,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { watch } from '@vue/runtime-core'
+import { watch, reactive } from 'vue'
 import { loadFromFile, loadFromUrl, sourceUrl } from '@/hooks/use-cropper'
 import { shouldBeShown, close } from '@/hooks/use-image-form'
-import { get } from '@vueuse/shared'
+import { get } from '@vueuse/core'
 
 const errors = reactive({
 	url: '',
