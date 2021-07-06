@@ -1,7 +1,7 @@
 <template>
 	<section class="flex flex-col items-center h-full">
 		<header class="hidden w-full p-10 md:block">
-			<shortcuts-popover />
+			<shortcuts-popover-button />
 		</header>
 
 		<cropper />

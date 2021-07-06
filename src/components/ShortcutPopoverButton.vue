@@ -1,5 +1,5 @@
 <template>
-	<popover>
+	<shortcut-popover>
 		<template #button="{ open }">
 			<icon name="uil:keyboard" class="w-5 h-5 mr-2" />
 			<span class="font-medium" v-text="open ? 'Esc' : 'Shortcuts'" />
@@ -21,12 +21,12 @@
 						@click="() => tool.action?.()"
 					>
 						<span class="mr-20 text-sm" v-text="tool.description" />
-						<shortcut :keybindings="tool.keybinding" />
+						<shortcut v-if="tool.keybinding" :keybindings="tool.keybinding" />
 					</button>
 				</div>
 			</div>
 		</template>
-	</popover>
+	</shortcut-popover>
 </template>
 
 <script setup lang="ts">

@@ -15,7 +15,9 @@ export default defineConfig({
 	plugins: [
 		vue(),
 		windi(),
-		components(),
+		components({
+			globalComponentsDeclaration: true,
+		}),
 		icons({
 			iconDirs: [path.resolve(process.cwd(), 'src/icons')],
 			symbolId: '[dir]:[name]',

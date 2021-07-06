@@ -59,11 +59,11 @@ import { computed } from 'vue'
 import stencil from '../Stencil.vue'
 
 const previews = [
-	{ size: 32, status: 'online' },
-	{ size: 40, status: 'busy' },
+	{ size: 32, status: 'online' as const },
+	{ size: 40, status: 'busy' as const },
 	{ size: 80 },
-	{ size: 40, status: 'away' },
-	{ size: 32, status: 'offline' },
+	{ size: 40, status: 'away' as const },
+	{ size: 32, status: 'offline' as const },
 ]
 
 const settings = computed(() => ({

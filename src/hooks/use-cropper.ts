@@ -111,8 +111,8 @@ export function flip(mode: 'horizontal' | 'vertical') {
 /**
  * Handles a crop event.
  */
-export function change(crop: CropData) {
-	state.crop = crop
+export function change(crop: any) {
+	state.crop = crop as CropData
 }
 
 /**
