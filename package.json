@@ -1,7 +1,7 @@
 {
   "name": "avatar",
-  "version": "0.1.0",
   "license": "MIT",
+	"private": "true",
   "author": {
     "name": "Enzo Innocenzi",
     "email": "enzo@innocenzi.dev"
