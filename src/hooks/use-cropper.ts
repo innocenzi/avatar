@@ -1,4 +1,4 @@
-import { useLocalStorage, get, set, useDebounceFn } from '@vueuse/core'
+import { useSessionStorage, get, set, useDebounceFn } from '@vueuse/core'
 import { reactive, Ref, ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
 import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
@@ -6,7 +6,7 @@ import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } 
 export const element = ref() as Ref<CropperElement>
 
 export const queryUrl = new URLSearchParams(window.location.search).get('url')
-export const sourceUrl = useLocalStorage<string>('source-url', null)
+export const sourceUrl = useSessionStorage<string>('source-url', '')
 export const state = reactive<State>({
 	loading: false,
 })
