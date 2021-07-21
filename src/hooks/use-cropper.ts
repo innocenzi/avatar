@@ -208,7 +208,7 @@ export async function loadFromUrl(url: string | null) {
 		console.warn(error)
 
 		if (error.message.includes('NetworkError when attempting to fetch resource.')) {
-			return displayError('Your browser can not access this URL because the server denies it via CORS.', 'url')
+			return displayError('Your browser can not access this URL because the server denies it via CORS. You may want to try copying the image and pasting it in there instead.', 'url')
 		}
 
 		return displayError([
