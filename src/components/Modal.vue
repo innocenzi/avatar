@@ -34,9 +34,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmit, defineProps } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
 
-defineEmit(['close'])
+defineEmits(['close'])
 defineProps({ show: Boolean })
 </script>
