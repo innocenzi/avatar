@@ -27,11 +27,24 @@
 </template>
 
 <script setup lang="ts">
-import { useEventListener, tryOnMounted } from '@vueuse/core'
+import { useEventListener, tryOnMounted, set } from '@vueuse/core'
 import { useShortcuts } from '@/hooks/use-tools'
-import { loadFromFile } from './hooks/use-cropper'
+import { loadFromFile, loadFromUrl, queryUrl, sourceUrl } from './hooks/use-cropper'
+import { show } from './hooks/use-image-form'
+import { state } from './hooks/state'
 
 tryOnMounted(useShortcuts)
+
+/**
+ * When mounted, tries to load the URL from the query parameters.
+ */
+tryOnMounted(async() => {
+	if (!await loadFromUrl(queryUrl)) {
+		set(sourceUrl, queryUrl)
+		state.source = undefined
+		state.loading = false
+	}
+})
 
 useEventListener(window, 'paste', (paste: ClipboardEvent) => {
 	const items = paste.clipboardData?.items

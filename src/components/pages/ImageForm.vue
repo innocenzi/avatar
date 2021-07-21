@@ -92,43 +92,15 @@
 </template>
 
 <script setup lang="ts">
-import { watch, reactive } from 'vue'
+import { watch } from 'vue'
 import { loadFromFile, loadFromUrl, sourceUrl } from '@/hooks/use-cropper'
-import { shouldBeShown, close } from '@/hooks/use-image-form'
+import { errors, shouldBeShown, close, resetError, displayError } from '@/hooks/use-image-form'
 import { get } from '@vueuse/core'
-
-const errors = reactive({
-	url: '',
-	file: '',
-})
 
 /**
  * Clears error when needed.
  */
 watch([sourceUrl], () => resetError('url'))
-
-/**
- * Resets errors.
- */
-function resetError(...types: Array<'url' | 'file'>) {
-	types.forEach((type) => errors[type] = '')
-}
-
-/**
- * Displays an error.
- */
-function displayError(error: string | string[], type: 'url' | 'file') {
-	resetError('file', 'url')
-
-	if (!Array.isArray(error)) {
-		error = [error]
-	}
-
-	error = error[Math.floor(Math.random() * error.length)]
-	errors[type] = error ?? ''
-
-	return false
-}
 
 /**
  * Handles file input.
@@ -141,25 +113,13 @@ async function onFileInput(event: Event) {
 		return
 	}
 
-	loadFromFile(file).catch(() => displayError([
-		'Could not load this file, sorry. Do not try later, the same thing will happen.',
-		'Seems like this is not a valid file.',
-		'Sorry, we are too lazy to open this one.',
-		'Is this even a file?',
-		'I wish users knew how to use a computer.',
-	], 'file'))
+	await loadFromFile(file)
 }
 
 /**
  * Handles URL input.
  */
 async function onUrlInput() {
-	return loadFromUrl(get(sourceUrl)).catch(() => displayError([
-		'Could not load this URL, sorry.',
-		"No, this won't do.",
-		'No, you are not linking to an image.',
-		'Is this a URL?',
-		'Roses are reds, violets are blue, this URL does not point to an image, thank you.',
-	], 'url'))
+	await loadFromUrl(get(sourceUrl))
 }
 </script>

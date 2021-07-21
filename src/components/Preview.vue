@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { state } from '@/hooks/use-cropper'
+import { state } from '@/hooks/state'
 import { Preview as CropperPreview } from 'vue-advanced-cropper'
 import { defineProps } from 'vue'
 

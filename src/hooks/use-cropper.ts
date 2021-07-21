@@ -1,42 +1,14 @@
 import { useSessionStorage, get, set, useDebounceFn } from '@vueuse/core'
-import { reactive, Ref, ref } from 'vue'
+import { Ref, ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
 import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
+import { state } from './state'
+import { displayError } from './use-image-form'
 
 export const element = ref() as Ref<CropperElement>
 
 export const queryUrl = new URLSearchParams(window.location.search).get('url')
 export const sourceUrl = useSessionStorage<string>('source-url', '')
-export const state = reactive<State>({
-	loading: false,
-})
-
-export interface State {
-	loading: boolean
-	inputDialog?: boolean
-
-	source?: {
-		/**
-		 * Blob URL.
-		 */
-		url: string
-
-		/**
-		 * File name of the source.
-		 */
-		name: string
-
-		/**
-		 * Mime type of the source.
-		 */
-		type?: string
-	}
-
-	/**
-	 * Crop data.
-	 */
-	crop?: CropData
-}
 
 /**
  * Rotates the image.
@@ -170,30 +142,43 @@ export async function loadFromFile(file: File | null) {
 	const url = URL.createObjectURL(file)
 	const reader = new FileReader()
 
-	return new Promise((resolve, reject) => {
-		reader.addEventListener('load', () => {
-			state.loading = false
+	try {
+		return await new Promise((resolve, reject) => {
+			reader.addEventListener('load', () => {
+				state.loading = false
 
-			if (!reader.result) {
-				return reject(new Error('Could not read the file.'))
-			}
+				if (!reader.result) {
+					return reject(new Error('Could not read the file.'))
+				}
 
-			const type = getMimeTypeFromBuffer(reader.result as ArrayBuffer, file.type)
-			if (!type?.startsWith('image')) {
-				return reject(new Error(`Unsupported mime type: ${type}`))
-			}
+				const type = getMimeTypeFromBuffer(reader.result as ArrayBuffer, file.type)
+				if (!type?.startsWith('image')) {
+					return reject(new Error(`Unsupported mime type: ${type}`))
+				}
 
-			state.source = {
-				url,
-				type,
-				name: file.name,
-			}
+				state.source = {
+					url,
+					type,
+					name: file.name,
+				}
 
-			resolve(true)
+				resolve(true)
+			})
+
+			reader.readAsArrayBuffer(file)
 		})
+	} catch (error) {
+		state.loading = false
+		console.warn(error)
 
-		reader.readAsArrayBuffer(file)
-	})
+		return displayError([
+			'Could not load this file, sorry. Do not try later, the same thing will happen.',
+			'Seems like this is not a valid file.',
+			'Sorry, we are too lazy to open this one.',
+			'Is this even a file?',
+			'I wish users knew how to use a computer.',
+		], 'file')
+	}
 }
 
 /**
@@ -205,15 +190,33 @@ export async function loadFromUrl(url: string | null) {
 	}
 
 	state.loading = true
-	const file = await fetch(url)
-		.then((response) => response.blob())
-		.then((blob) => {
-			const type = getMimeTypeFromBlob(blob)
-			const fileName = new URL(url).pathname.split('/').pop() || `cropped.${getExtensionFromMimeType(type)}`
-			set(sourceUrl, url)
 
-			return new File([blob], fileName, { type })
-		})
+	try {
+		const file = await fetch(url)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const type = getMimeTypeFromBlob(blob)
+				const fileName = new URL(url).pathname.split('/').pop() || `cropped.${getExtensionFromMimeType(type)}`
+				set(sourceUrl, url)
 
-	return loadFromFile(file)
+				return new File([blob], fileName, { type })
+			})
+
+		return loadFromFile(file)
+	} catch (error) {
+		state.loading = false
+		console.warn(error)
+
+		if (error.message.includes('NetworkError when attempting to fetch resource.')) {
+			return displayError('Your browser can not access this URL because the server denies it via CORS.', 'url')
+		}
+
+		return displayError([
+			'Could not load this one, sorry.',
+			"No, this won't do.",
+			'No, you are not linking to an image.',
+			'Is this a URL?',
+			'Roses are reds, violets are blue, this one does not point to an image, thank you.',
+		], 'url')
+	}
 }

@@ -53,7 +53,8 @@
 
 <script setup lang="ts">
 import { TransitionRoot } from '@headlessui/vue'
-import { state, element, change, error } from '@/hooks/use-cropper'
+import { element, change, error } from '@/hooks/use-cropper'
+import { state } from '@/hooks/state'
 import { Cropper } from 'vue-advanced-cropper'
 import { computed } from 'vue'
 import stencil from '../Stencil.vue'

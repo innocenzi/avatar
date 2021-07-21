@@ -1,14 +1,33 @@
-import { tryOnMounted } from '@vueuse/core'
-import { computed, watch } from 'vue'
-import { loadFromUrl, queryUrl, state } from './use-cropper'
+import { computed, reactive, watch } from 'vue'
+import { state } from './state'
+
+export const errors = reactive({
+	url: '',
+	file: '',
+})
 
 /**
- * When mounted, if there was a source URL in the storage,
- * loads it (as a convenience).
+ * Resets errors.
  */
-tryOnMounted(async() => {
-	loadFromUrl(queryUrl).catch((e) => console.warn('Automatic load failed.', e))
-})
+export function resetError(...types: Array<'url' | 'file'>) {
+	types.forEach((type) => errors[type] = '')
+}
+
+/**
+ * Displays an error.
+ */
+export function displayError(error: string | string[], type: 'url' | 'file') {
+	resetError('file', 'url')
+
+	if (!Array.isArray(error)) {
+		error = [error]
+	}
+
+	error = error[Math.floor(Math.random() * error.length)]
+	errors[type] = error ?? ''
+
+	return false
+}
 
 /**
  * Closes the input dialog request when the source changes.
