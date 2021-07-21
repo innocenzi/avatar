@@ -53,11 +53,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmit, defineProps } from 'vue'
+import { computed, defineEmits, defineProps } from 'vue'
 import { DraggableElement, DraggableArea, StencilPreview, ResizeEvent } from 'vue-advanced-cropper'
 import type { Coordinates, Image, DragEvent, MoveEvent } from 'vue-advanced-cropper'
 
-const emit = defineEmit(['move', 'move-end', 'resize', 'resize-end'])
+const emit = defineEmits(['move', 'move-end', 'resize', 'resize-end'])
 const props = defineProps<{
 	image: Image
 	coordinates: Coordinates
