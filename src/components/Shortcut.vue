@@ -12,11 +12,11 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
-const { keybindings } = defineProps<{
+const props = defineProps<{
 	keybindings: string
 }>()
 
-const parts = keybindings.split('+')
+const parts = props.keybindings.split('+')
 const name = (key: string) => {
 	const map: Record<string, string> = {
 		ArrowLeft: '←',
