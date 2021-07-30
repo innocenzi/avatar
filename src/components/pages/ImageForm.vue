@@ -94,7 +94,7 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { loadFromFile, loadFromUrl, sourceUrl } from '@/hooks/use-cropper'
-import { errors, shouldBeShown, close, resetError, displayError } from '@/hooks/use-image-form'
+import { errors, shouldBeShown, close, resetError } from '@/hooks/use-image-form'
 import { get } from '@vueuse/core'
 
 /**
