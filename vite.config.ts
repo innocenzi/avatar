@@ -1,6 +1,6 @@
-import path from 'path'
+import path from 'node:path'
 import windi from 'vite-plugin-windicss'
-import components from 'vite-plugin-components'
+import components from 'unplugin-vue-components/vite'
 import fonts from 'vite-plugin-fonts'
 import vue from '@vitejs/plugin-vue'
 import icons from 'vite-plugin-svg-icons'
@@ -15,9 +15,7 @@ export default defineConfig({
 	plugins: [
 		vue(),
 		windi(),
-		components({
-			globalComponentsDeclaration: true,
-		}),
+		components(),
 		icons({
 			iconDirs: [path.resolve(process.cwd(), 'src/icons')],
 			symbolId: '[dir]:[name]',
