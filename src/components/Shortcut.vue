@@ -1,17 +1,4 @@
-<template>
-	<div class="flex space-x-1">
-		<div
-			v-for="part in parts"
-			:key="part"
-			class="rounded-md bg-gray-700 px-2 py-1 text-xs capitalize font-medium text-gray-200"
-			v-text="name(part)"
-		/>
-	</div>
-</template>
-
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
 const props = defineProps<{
 	keybindings: string
 }>()
@@ -30,3 +17,14 @@ const name = (key: string) => {
 	return map[key] ?? key
 }
 </script>
+
+<template>
+	<div class="flex space-x-1">
+		<div
+			v-for="part in parts"
+			:key="part"
+			class="rounded-md bg-gray-700 px-2 py-1 text-xs capitalize font-medium text-gray-200"
+			v-text="name(part)"
+		/>
+	</div>
+</template>

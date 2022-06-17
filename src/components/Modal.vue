@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { defineEmits } from 'vue'
+import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
+
+defineEmits(['close'])
+defineProps({ show: Boolean })
+</script>
+
 <template>
 	<TransitionRoot appear as="template" :show="show">
 		<Dialog
@@ -32,11 +40,3 @@
 		</Dialog>
 	</TransitionRoot>
 </template>
-
-<script setup lang="ts">
-import { defineEmits, defineProps } from 'vue'
-import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
-
-defineEmits(['close'])
-defineProps({ show: Boolean })
-</script>

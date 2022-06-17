@@ -1,11 +1,12 @@
 import { useSessionStorage, get, set, useDebounceFn } from '@vueuse/core'
-import { Ref, ref } from 'vue'
+import { ref } from 'vue'
 import { CropperElement, CropData } from 'vue-advanced-cropper'
 import { getMimeTypeFromBuffer, getMimeTypeFromBlob, getExtensionFromMimeType } from '../utils/mime-type'
+import { GifToCanvas } from '../gif-to-canvas'
 import { state } from './state'
 import { displayError } from './use-image-form'
 
-export const element = ref() as Ref<CropperElement>
+export const element = ref<CropperElement>()
 
 export const queryUrl = new URLSearchParams(window.location.search).get('url')
 export const sourceUrl = useSessionStorage<string>('source-url', '')
@@ -14,14 +15,14 @@ export const sourceUrl = useSessionStorage<string>('source-url', '')
  * Rotates the image.
  */
 export function rotate(angle: number) {
-	get(element).rotate(angle)
+	get(element)?.rotate(angle)
 }
 
 /**
  * Resets the cropper.
  */
 export function reset() {
-	get(element).reset()
+	get(element)?.reset()
 }
 
 /**
@@ -29,7 +30,7 @@ export function reset() {
  */
 export function transform(mode: 'center' | 'maximize' | 'reset') {
 	if (mode === 'center') {
-		get(element).setCoordinates(({ imageSize, coordinates }) => ({
+		get(element)?.setCoordinates(({ imageSize, coordinates }) => ({
 			left: imageSize.width / 2 - coordinates.width / 2,
 			top: imageSize.height / 2 - coordinates.height / 2,
 		}))
@@ -37,11 +38,11 @@ export function transform(mode: 'center' | 'maximize' | 'reset') {
 
 	if (mode === 'maximize') {
 		const center = {
-			left: get(element).coordinates.left + get(element).coordinates.width / 2,
-			top: get(element).coordinates.top + get(element).coordinates.height / 2,
+			left: get(element)!.coordinates.left + get(element)!.coordinates.width / 2,
+			top: get(element)!.coordinates.top + get(element)!.coordinates.height / 2,
 		}
 
-		get(element).setCoordinates([
+		get(element)?.setCoordinates([
 			({ imageSize }) => ({
 				width: imageSize.width,
 				height: imageSize.height,
@@ -62,7 +63,7 @@ export function transform(mode: 'center' | 'maximize' | 'reset') {
  * Zooms the image.
  */
 export function zoom(mode: 'in' | 'out') {
-	get(element).zoom(mode === 'in' ? 1.25 : 0.75)
+	get(element)?.zoom(mode === 'in' ? 1.25 : 0.75)
 }
 
 /**
@@ -72,7 +73,7 @@ export function flip(mode: 'horizontal' | 'vertical') {
 	let horizontal = mode === 'horizontal'
 	let vertical = mode === 'vertical'
 
-	if (get(element).customImageTransforms.rotate % 180 !== 0) {
+	if (get(element)!.customImageTransforms.rotate % 180 !== 0) {
 		horizontal = !horizontal
 		vertical = !vertical
 	}
@@ -99,15 +100,80 @@ export function error() {
 }
 
 /**
+ * Gets a single cropped image from the canvas.
+ */
+export async function getCroppedImage(): Promise<string> {
+	if (state.source?.type === 'image/gif') {
+		return await getCroppedGIF()
+	}
+
+	const blob = await new Promise<Blob>((resolve) => get(element)?.getResult().canvas.toBlob((blob) => resolve(blob!)))
+	return URL.createObjectURL(blob)
+}
+
+/**
+ * Gets the cropped GIF.
+ */
+export async function getCroppedGIF() {
+	if (!state.source) {
+		throw new Error('There is no GIF.')
+	}
+
+	return new Promise<string>((resolve) => {
+		const crop = get(element)!.getResult()
+
+		const gifToCanvas = new GifToCanvas(state.source!.url, {
+			// TODO find out values here
+			// targetOffset: {
+			// 	dx: crop.visibleArea.left - crop.coordinates.left,
+			// 	dy: crop.visibleArea.top - crop.coordinates.top,
+			// 	width: crop.canvas.width,
+			// 	height: crop.canvas.height,
+			// 	sWidth: crop.canvas.width,
+			// 	sHeight: crop.canvas.height,
+			// },
+		})
+
+		gifToCanvas.init()
+
+		const gif = new GIF({
+			workers: 2,
+			quality: 10,
+			workerScript: '/scripts/gif.worker.js',
+		})
+
+		const addFrame = (canvas: HTMLCanvasElement, delay: number) => {
+			gif.addFrame(canvas, { copy: true, delay })
+		}
+
+		gifToCanvas.on('progress', (canvas, delay) => {
+			addFrame(canvas, delay)
+		})
+
+		gifToCanvas.on('finished', (canvas, delay) => {
+			addFrame(canvas, delay)
+			gif.render()
+		})
+
+		gif.on('finished', (blob) => {
+			resolve(URL.createObjectURL(blob))
+		})
+	})
+}
+
+/**
  * Downloads the cropped image.
  */
 export async function download() {
+	if (!get(element)) {
+		throw new Error('Cropper element does not exist.')
+	}
+
 	if (!state.crop) {
 		return
 	}
 
-	const blob = await new Promise((resolve) => get(element)?.getResult().canvas.toBlob((blob) => resolve(blob)))
-	const url = URL.createObjectURL(blob)
+	const url = await getCroppedImage()
 	const a = document.createElement('a')
 	a.href = url
 	a.download = state.source?.name.replace('.', '-cropped.') || 'download'
@@ -203,7 +269,7 @@ export async function loadFromUrl(url: string | null) {
 			})
 
 		return loadFromFile(file)
-	} catch (error) {
+	} catch (error: any) {
 		state.loading = false
 		console.warn(error)
 

@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { Preview as CropperPreview } from 'vue-advanced-cropper'
+import { state } from '@/hooks/state'
+
+defineProps<{
+	width: number
+	height: number
+	status?: 'busy' | 'away' | 'online' | 'offline'
+}>()
+</script>
+
 <template>
 	<div class="relative">
 		<cropper-preview
@@ -21,15 +32,3 @@
 		/>
 	</div>
 </template>
-
-<script setup lang="ts">
-import { state } from '@/hooks/state'
-import { Preview as CropperPreview } from 'vue-advanced-cropper'
-import { defineProps } from 'vue'
-
-defineProps<{
-	width: number
-	height: number
-	status?: 'busy' | 'away' | 'online' | 'offline'
-}>()
-</script>

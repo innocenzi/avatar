@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { watch } from 'vue'
+import { get } from '@vueuse/core'
+import { loadFromFile, loadFromUrl, sourceUrl } from '@/hooks/use-cropper'
+import { errors, shouldBeShown, close, resetError } from '@/hooks/use-image-form'
+
+/**
+ * Clears error when needed.
+ */
+watch([sourceUrl], () => resetError('url'))
+
+/**
+ * Handles file input.
+ */
+async function onFileInput(event: Event) {
+	const target = event.target as HTMLInputElement
+	const file = target.files?.item(0)
+
+	if (!file) {
+		return
+	}
+
+	await loadFromFile(file)
+}
+
+/**
+ * Handles URL input.
+ */
+async function onUrlInput() {
+	await loadFromUrl(get(sourceUrl))
+}
+</script>
+
 <template>
 	<modal :show="shouldBeShown" @close="close">
 		<section class="flex flex-col items-center justify-center w-full max-w-lg pointer-events-auto">
@@ -90,36 +123,3 @@
 		</section>
 	</modal>
 </template>
-
-<script setup lang="ts">
-import { watch } from 'vue'
-import { loadFromFile, loadFromUrl, sourceUrl } from '@/hooks/use-cropper'
-import { errors, shouldBeShown, close, resetError } from '@/hooks/use-image-form'
-import { get } from '@vueuse/core'
-
-/**
- * Clears error when needed.
- */
-watch([sourceUrl], () => resetError('url'))
-
-/**
- * Handles file input.
- */
-async function onFileInput(event: Event) {
-	const target = event.target as HTMLInputElement
-	const file = target.files?.item(0)
-
-	if (!file) {
-		return
-	}
-
-	await loadFromFile(file)
-}
-
-/**
- * Handles URL input.
- */
-async function onUrlInput() {
-	await loadFromUrl(get(sourceUrl))
-}
-</script>

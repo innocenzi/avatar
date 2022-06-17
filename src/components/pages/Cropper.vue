@@ -1,9 +1,36 @@
+<script setup lang="ts">
+import { TransitionRoot } from '@headlessui/vue'
+import { CropperElement, Cropper as BaseCropper } from 'vue-advanced-cropper'
+import { computed, ref, watch } from 'vue'
+import stencil from '../Stencil.vue'
+import { state } from '@/hooks/state'
+import { element, change, error } from '@/hooks/use-cropper'
+
+const previews = [
+	{ size: 32, status: 'online' as const },
+	{ size: 40, status: 'busy' as const },
+	{ size: 80 },
+	{ size: 40, status: 'away' as const },
+	{ size: 32, status: 'offline' as const },
+]
+
+const settings = computed(() => ({
+	aspectRatio: 1 / 1,
+}))
+
+const cropper = ref<CropperElement>()
+
+watch(cropper, () => {
+	element.value = cropper.value
+})
+</script>
+
 <template>
 	<div class="flex flex-col items-center justify-center flex-grow w-full px-4 mt-4 md:mt-0">
 		<div class="relative w-full h-full rounded-lg overflow-hidden">
-			<cropper
+			<BaseCropper
 				v-if="state.source && !state.loading"
-				ref="element"
+				ref="cropper"
 				:src="state.source.url"
 				:debounce="false"
 				:stencil-component="stencil"
@@ -50,27 +77,6 @@
 		</transition-root>
 	</div>
 </template>
-
-<script setup lang="ts">
-import { TransitionRoot } from '@headlessui/vue'
-import { element, change, error } from '@/hooks/use-cropper'
-import { state } from '@/hooks/state'
-import { Cropper } from 'vue-advanced-cropper'
-import { computed } from 'vue'
-import stencil from '../Stencil.vue'
-
-const previews = [
-	{ size: 32, status: 'online' as const },
-	{ size: 40, status: 'busy' as const },
-	{ size: 80 },
-	{ size: 40, status: 'away' as const },
-	{ size: 32, status: 'offline' as const },
-]
-
-const settings = computed(() => ({
-	aspectRatio: 1 / 1,
-}))
-</script>
 
 <style>
 .vue-advanced-cropper {
